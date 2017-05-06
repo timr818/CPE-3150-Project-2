@@ -23,5 +23,32 @@ sbit button9 = P2^2;
 unsigned char mode = 0;
 
 void main() {
-	if (
+	while(1) {
+		if (mode == 0) {
+			light3 = 1;
+			light2 = 0;
+		} else if (mode == 1) {
+			light2 = 1;
+			light3 = 0;
+		} else if (mode == 2) {
+			light2 = 1;
+			light3 = 0;
+		}
+		
+		if (button9) {
+			if (mode == 3) {
+				mode = 0;
+			} else {
+				mode++;
+			}
+		}
+		
+		if (button7) {
+			if (mode == 0) {
+				mode = 3;
+			} else {
+				mode--;
+			}
+		}
+	}
 }
