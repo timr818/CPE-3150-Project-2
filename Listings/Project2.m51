@@ -1,0 +1,120 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/06/2017  17:14:46  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\proj.obj TO .\Objects\Project2 PRINT (.\Listings\Project2.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\proj.obj (PROJ)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\Project2 (PROJ)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0001H     UNIT         ?DT?PROJ
+            IDATA   0009H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     008CH     UNIT         ?C_C51STARTUP
+            CODE    088CH     004DH     UNIT         ?PR?MAIN?PROJ
+            CODE    08D9H     0004H     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\Project2 (PROJ)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?PROJ
+  +--> ?C_INITSEG
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\Project2 (PROJ)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        PROJ
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IEN0
+  D:00E8H         PUBLIC        IEN1
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/06/2017  17:14:46  PAGE 2
+
+
+  C:088CH         PUBLIC        main
+  D:0008H         PUBLIC        mode
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  D:00B8H         PUBLIC        IP0
+  D:00C8H         PUBLIC        TCR20
+  B:0080H.5       PUBLIC        light2
+  B:00A0H.7       PUBLIC        light3
+  B:00A0H.1       PUBLIC        button7
+  B:0080H.3       PUBLIC        button8
+  B:00A0H.2       PUBLIC        button9
+  D:00D8H         PUBLIC        I2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:088CH         LINE#         25
+  C:088CH         LINE#         26
+  C:088CH         LINE#         27
+  C:0890H         LINE#         28
+  C:0892H         LINE#         29
+  C:0894H         LINE#         30
+  C:089BH         LINE#         31
+  C:089BH         LINE#         32
+  C:089BH         LINE#         33
+  C:08A2H         LINE#         34
+  C:08A4H         LINE#         35
+  C:08A6H         LINE#         36
+  C:08A6H         LINE#         38
+  C:08A9H         LINE#         39
+  C:08AEH         LINE#         40
+  C:08B1H         LINE#         41
+  C:08B3H         LINE#         42
+  C:08B5H         LINE#         43
+  C:08B5H         LINE#         44
+  C:08B5H         LINE#         46
+  C:08B8H         LINE#         47
+  C:08BCH         LINE#         48
+  C:08BFH         LINE#         49
+  C:08C1H         LINE#         50
+  C:08C3H         LINE#         51
+  C:08C3H         LINE#         52
+  C:08C3H         LINE#         54
+  C:08C6H         LINE#         55
+  C:08CCH         LINE#         57
+  C:08D2H         LINE#         59
+  C:08D7H         LINE#         61
+  C:08D7H         LINE#         62
+  C:08D7H         LINE#         63
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        PROJ
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0050H BYTE ( 3%) *
+******************************************************************************
+
+Program Size: data=10.0 xdata=0 code=224
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

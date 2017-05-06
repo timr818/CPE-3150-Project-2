@@ -50,5 +50,15 @@ void main() {
 				mode--;
 			}
 		}
+		
+		if (button8) { //if mode is selected
+			if (mode == 1) {
+				//smash mouth
+			} else if (mode == 2) {
+				//tune 2
+			} else if (mode == 3) {
+				//piano
+			}
+		}
 	}
 }
