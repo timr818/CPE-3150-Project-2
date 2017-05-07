@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   PROJ                                                                  05/07/2017 10:43:31 PAGE 1   
+C51 COMPILER V9.54   PROJ                                                                  05/07/2017 11:41:54 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE PROJ
@@ -36,234 +36,253 @@ line level    source
   26          static bit mtxbusy;
   27          
   28          unsigned char mode;
-  29                        
-  30          unsigned char smStart;
-  31          unsigned char smEnd;
-  32          unsigned char rrStart;
-  33          unsigned char rrEnd;
-  34          
-  35          void delay(unsigned int time);
-  36          void playsound(unsigned int dur, unsigned int del);
-  37          void piano(void);
-  38          void uart_init (void);
-  39          void uart_isr(void);
-  40          void uart_transmit(char c);
-  41          
-  42          char trans;
-  43          
-  44          void main(void) {
-  45   1        mode = 1;
-  46   1        
-  47   1        //initialize the ports so buttons and lights work
-  48   1        P2M1=0;
-  49   1        P1M1=0x2F&P1M1;
-  50   1        P0M1=0;
-  51   1        
-  52   1        trans = 65;
-  53   1        uart_init(); //initialize serial stuff
-  54   1        
-C51 COMPILER V9.54   PROJ                                                                  05/07/2017 10:43:31 PAGE 2   
+  29          unsigned int buttonDelay;
+  30                        
+  31          unsigned char smStart;
+  32          unsigned char smEnd;
+  33          unsigned char rrStart;
+  34          unsigned char rrEnd;
+  35          
+  36          void delay(unsigned int time);
+  37          void playsound(unsigned int dur, unsigned int del);
+  38          void piano(void);
+  39          void uart_init (void);
+  40          void uart_isr(void);
+  41          void uart_transmit(char c);
+  42          
+  43          char trans;
+  44          
+  45          void main(void) {
+  46   1        mode = 1;
+  47   1        buttonDelay = 1000;
+  48   1        
+  49   1        //initialize the ports so buttons and lights work
+  50   1        P2M1=0;
+  51   1        P1M1=0x2F&P1M1;
+  52   1        P0M1=0;
+  53   1        
+  54   1        trans = 65;
+C51 COMPILER V9.54   PROJ                                                                  05/07/2017 11:41:54 PAGE 2   
 
-  55   1        while(1) { //do FOREVER!!! MUWAHAHAHA
-  56   2          light8=0;
-  57   2          
-  58   2          //mode 1 = Smashmouth
-  59   2          //mode 2 = rickroll
-  60   2          //mode 3 = Piano
-  61   2          
-  62   2          uart_transmit('A');
+  55   1        uart_init(); //initialize serial stuff
+  56   1        
+  57   1        while(1) { //do FOREVER!!! MUWAHAHAHA
+  58   2          light8=0;
+  59   2          
+  60   2          //mode 1 = Smashmouth
+  61   2          //mode 2 = rickroll
+  62   2          //mode 3 = Piano
   63   2          
-  64   2          //display which mode you are in
-  65   2          if (mode == 1) {
-  66   3            light3 = 0;
-  67   3            light2 = 1;
-  68   3          } else if (mode == 2) {
-  69   3            light2 = 0;
-  70   3            light3 = 1;
-  71   3          } else if (mode == 3) {
-  72   3            light2 = 0;
-  73   3            light3 = 0;
-  74   3          }
-  75   2          
-  76   2          //increment button.
-  77   2          if (!button9) {
-  78   3            light9 = 0;
-  79   3            if (mode >= 3) {
-  80   4              mode = 0;
-  81   4              delay(300);
-  82   4            } else {
-  83   4              mode++;
-  84   4              delay(300);
-  85   4            }
-  86   3            light9 = 1;
-  87   3          }
-  88   2          
-  89   2          //decrement button
-  90   2          if (!button7) {
-  91   3            light7 = 0;
-  92   3            if (mode <= 1) {
-  93   4              mode = 3;
-  94   4              delay(300);
-  95   4            } else {
-  96   4              mode--;
-  97   4              delay(300);
-  98   4            }
-  99   3            light7 = 1;
- 100   3          }
- 101   2          
- 102   2          //selection mode
- 103   2          if (!button8) { //mode is selected
- 104   3            if (mode == 1) {
- 105   4              //smash mouth
- 106   4            } else if (mode == 2) {
- 107   4              //tune 2
- 108   4            } else if (mode == 3) {
- 109   4              light2=1;
- 110   4              light3=1;
- 111   4              light8=1;
- 112   4              delay(100);
- 113   4              piano();
- 114   4            }
- 115   3          }
- 116   2        }
-C51 COMPILER V9.54   PROJ                                                                  05/07/2017 10:43:31 PAGE 3   
+  64   2          
+  65   2          //display which mode you are in
+  66   2          if (mode == 1) {
+  67   3            light3 = 0;
+  68   3            light2 = 1;
+  69   3          } else if (mode == 2) {
+  70   3            light2 = 0;
+  71   3            light3 = 1;
+  72   3          } else if (mode == 3) {
+  73   3            light2 = 0;
+  74   3            light3 = 0;
+  75   3          }
+  76   2          
+  77   2          //increment button.
+  78   2          if (!button9) {
+  79   3            light9 = 0;
+  80   3            if (mode >= 3) {
+  81   4              mode = 0;
+  82   4              delay(buttonDelay);
+  83   4            } else {
+  84   4              mode++;
+  85   4              delay(buttonDelay);
+  86   4            }
+  87   3            light9 = 1;
+  88   3          }
+  89   2          
+  90   2          //decrement button
+  91   2          if (!button7) {
+  92   3            light7 = 0;
+  93   3            if (mode <= 1) {
+  94   4              mode = 3;
+  95   4              delay(buttonDelay);
+  96   4            } else {
+  97   4              mode--;
+  98   4              delay(buttonDelay);
+  99   4            }
+ 100   3            light7 = 1;
+ 101   3          }
+ 102   2          
+ 103   2          //selection mode
+ 104   2          if (!button8) { //mode is selected
+ 105   3            if (mode == 1) {
+ 106   4              light1=0;
+ 107   4              uart_transmit('S');
+ 108   4              uart_transmit('M');
+ 109   4              uart_transmit('A');
+ 110   4              uart_transmit('S');
+ 111   4              uart_transmit('H');
+ 112   4              uart_transmit(' ');
+ 113   4              uart_transmit('M');
+ 114   4              uart_transmit('O');
+ 115   4              uart_transmit('U');
+ 116   4              uart_transmit('T');
+C51 COMPILER V9.54   PROJ                                                                  05/07/2017 11:41:54 PAGE 3   
 
- 117   1      }
- 118          
- 119          void piano(void) {
- 120   1        unsigned char play = 1; //boolean for quiting the piano mode
- 121   1        light4 = 0; light5 = 0; light6 = 0; //turn on piano key lights
- 122   1        while(play) {
- 123   2          
- 124   2          //first key
- 125   2          if (!button4) {
- 126   3            light4 = 1;
- 127   3            playsound(5, 7);
- 128   3            light4 = 0;
- 129   3          }
- 130   2          
- 131   2          //second key
- 132   2          if (!button5) {
- 133   3            light5 = 1;
- 134   3            playsound(5, 5);
- 135   3            light5 = 0;
+ 117   4              uart_transmit('H');
+ 118   4              light1=1;
+ 119   4            } else if (mode == 2) {
+ 120   4              uart_transmit('R');
+ 121   4              uart_transmit('I');
+ 122   4              uart_transmit('C');
+ 123   4              uart_transmit('K');
+ 124   4              uart_transmit(' ');
+ 125   4              uart_transmit('R');
+ 126   4              uart_transmit('O');
+ 127   4              uart_transmit('L');
+ 128   4              uart_transmit('L');
+ 129   4            } else if (mode == 3) {
+ 130   4              light2=1;
+ 131   4              light3=1;
+ 132   4              light8=1;
+ 133   4              delay(buttonDelay);
+ 134   4              piano();
+ 135   4            }
  136   3          }
- 137   2          
- 138   2          //third key
- 139   2          if (!button6) {
- 140   3            light6 = 1;
- 141   3            playsound(5, 3);
- 142   3            light6 = 0;
- 143   3          }
+ 137   2        }
+ 138   1      }
+ 139          
+ 140          void piano(void) {
+ 141   1        unsigned char play = 1; //boolean for quiting the piano mode
+ 142   1        light4 = 0; light5 = 0; light6 = 0; //turn on piano key lights
+ 143   1        while(play) {
  144   2          
- 145   2          //exit button
- 146   2          if (!button8) {
- 147   3            light4 = 1; light5 = 1; light6 = 1;
- 148   3            delay(100);
- 149   3            play = 0;
+ 145   2          //first key
+ 146   2          if (!button4) {
+ 147   3            light4 = 1;
+ 148   3            playsound(5, 7);
+ 149   3            light4 = 0;
  150   3          }
- 151   2        }
- 152   1      }
- 153          
- 154          //plays a sound for a duration and del determines pitch
- 155          void playsound(unsigned int dur, unsigned int del) {
- 156   1        unsigned int i;
- 157   1        for (i=0; i<dur; i++) {
- 158   2          speaker = ~speaker;
- 159   2          delay(del);
- 160   2        }
- 161   1      }
- 162          
- 163          //delay for a time
- 164          void delay (unsigned int time) {
- 165   1        unsigned int i, j;
- 166   1        for (i=0; i < time; i++) {
- 167   2          for (j=0; j<200;j++) {
- 168   3          }
- 169   2        }
- 170   1      }
- 171          
- 172          void uart_init (void) {
- 173   1        // configure UART
- 174   1        // clear SMOD0
- 175   1        PCON &= ~0x40;
- 176   1        SCON = 0x50;
- 177   1        // set or clear SMOD1
- 178   1        PCON &= 0x7F;
-C51 COMPILER V9.54   PROJ                                                                  05/07/2017 10:43:31 PAGE 4   
+ 151   2          
+ 152   2          //second key
+ 153   2          if (!button5) {
+ 154   3            light5 = 1;
+ 155   3            playsound(5, 5);
+ 156   3            light5 = 0;
+ 157   3          }
+ 158   2          
+ 159   2          //third key
+ 160   2          if (!button6) {
+ 161   3            light6 = 1;
+ 162   3            playsound(5, 3);
+ 163   3            light6 = 0;
+ 164   3          }
+ 165   2          
+ 166   2          //exit button
+ 167   2          if (!button8) {
+ 168   3            light4 = 1; light5 = 1; light6 = 1;
+ 169   3            delay(buttonDelay);
+ 170   3            play = 0;
+ 171   3          }
+ 172   2        }
+ 173   1      }
+ 174          
+ 175          //plays a sound for a duration and del determines pitch
+ 176          void playsound(unsigned int dur, unsigned int del) {
+ 177   1        unsigned int i;
+ 178   1        for (i=0; i<dur; i++) {
+C51 COMPILER V9.54   PROJ                                                                  05/07/2017 11:41:54 PAGE 4   
 
- 179   1        PCON |= (0 << 8);
- 180   1        SSTAT = 0x00;
- 181   1      
- 182   1        // enable break detect
- 183   1        AUXR1 |= 0x40;
- 184   1      
- 185   1        // configure baud rate generator
- 186   1        //BRGCON = 0x00;
- 187   1        //BRGR0 = 0xF0;
- 188   1        //BRGR1 = 0x02;
- 189   1        //BRGCON = 0x03;
- 190   1        EA = 1;
- 191   1        ET1 = 1;
- 192   1        TMOD = 0x21;
- 193   1        TH1 = -3;
- 194   1        TR1 = 1;
- 195   1        
- 196   1      
- 197   1        // TxD = push-pull, RxD = input
- 198   1        P1M1 = 0x02;
- 199   1        P1M2 = 0x01;
- 200   1      
- 201   1        // initially not busy
- 202   1        mtxbusy = 0;
- 203   1      
- 204   1        // set isr priority to 0
- 205   1        IP0 = 1;
- 206   1        IP0H = 1;
- 207   1        
- 208   1        // enable uart interrupt
- 209   1        ES = 1;
- 210   1        EA = 1;
- 211   1      
- 212   1      
- 213   1      } // uart_init
- 214          
- 215          
- 216          void uart_isr(void) interrupt 4 using 1 {
- 217   1        if (RI)
- 218   1        {
- 219   2          //do nothing upon receiving stuff
- 220   2          
- 221   2          // clear interrupt flag
- 222   2          RI = 0;
- 223   2        }
+ 179   2          speaker = ~speaker;
+ 180   2          delay(del);
+ 181   2        }
+ 182   1      }
+ 183          
+ 184          //delay for a time
+ 185          void delay (unsigned int time) {
+ 186   1        unsigned int i, j;
+ 187   1        for (i=0; i < time; i++) {
+ 188   2          for (j=0; j<5;j++) {
+ 189   3          }
+ 190   2        }
+ 191   1      }
+ 192          
+ 193          void uart_init (void) {
+ 194   1        // configure UART
+ 195   1        // clear SMOD0
+ 196   1        PCON &= ~0x40;
+ 197   1        SCON = 0x50;
+ 198   1        // set or clear SMOD1
+ 199   1        PCON &= 0x7F;
+ 200   1        PCON |= (0 << 8);
+ 201   1        SSTAT = 0x00;
+ 202   1      
+ 203   1        // enable break detect
+ 204   1        AUXR1 |= 0x40;
+ 205   1      
+ 206   1        // configure baud rate generator
+ 207   1        //BRGCON = 0x00;
+ 208   1        //BRGR0 = 0xF0;
+ 209   1        //BRGR1 = 0x02;
+ 210   1        //BRGCON = 0x03;
+ 211   1        EA = 1;
+ 212   1        ET1 = 1;
+ 213   1        TMOD = 0x21;
+ 214   1        TH1 = -3;
+ 215   1        TR1 = 1;
+ 216   1        
+ 217   1      
+ 218   1        // TxD = push-pull, RxD = input
+ 219   1        P1M1 = 0x02;
+ 220   1        P1M2 = 0x01;
+ 221   1      
+ 222   1        // initially not busy
+ 223   1        mtxbusy = 0;
  224   1      
- 225   1        if (TI)
- 226   1        {
- 227   2          // clear interrupt flag
- 228   2          TI = 0;
- 229   2          // no longer busy
- 230   2          mtxbusy = 0;
- 231   2        }
- 232   1      }
- 233          
- 234          void uart_transmit(char c) {
- 235   1        if (mtxbusy == 0) {
- 236   2          mtxbusy = 1;
- 237   2          TI = 1;
- 238   2          SBUF = c;
- 239   2        }
- 240   1      }
-C51 COMPILER V9.54   PROJ                                                                  05/07/2017 10:43:31 PAGE 5   
+ 225   1        // set isr priority to 0
+ 226   1        IP0 = 1;
+ 227   1        IP0H = 1;
+ 228   1        
+ 229   1        // enable uart interrupt
+ 230   1        ES = 1;
+ 231   1        EA = 1;
+ 232   1      
+ 233   1      
+ 234   1      } // uart_init
+ 235          
+ 236          
+ 237          void uart_isr(void) interrupt 4 using 1 {
+ 238   1        if (RI)
+ 239   1        {
+ 240   2          //do nothing upon receiving stuff
+C51 COMPILER V9.54   PROJ                                                                  05/07/2017 11:41:54 PAGE 5   
 
+ 241   2          
+ 242   2          // clear interrupt flag
+ 243   2          RI = 0;
+ 244   2        }
+ 245   1      
+ 246   1        if (TI)
+ 247   1        {
+ 248   2          // clear interrupt flag
+ 249   2          TI = 0;
+ 250   2          // no longer busy
+ 251   2          mtxbusy = 0;
+ 252   2        }
+ 253   1      }
+ 254          
+ 255          void uart_transmit(char c) {
+ 256   1        while(mtxbusy);
+ 257   1        mtxbusy = 1;
+ 258   1        SBUF = c;
+ 259   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    372    ----
+   CODE SIZE        =    473    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      6       7
+   DATA SIZE        =      8       7
    IDATA SIZE       =   ----    ----
    BIT SIZE         =      1    ----
 END OF MODULE INFORMATION.

@@ -26,6 +26,7 @@ sbit speaker = P1^7;
 static bit mtxbusy;
 
 unsigned char mode;
+unsigned int buttonDelay;
 							
 unsigned char smStart;
 unsigned char smEnd;
@@ -43,6 +44,7 @@ char trans;
 
 void main(void) {
 	mode = 1;
+	buttonDelay = 1000;
 	
 	//initialize the ports so buttons and lights work
 	P2M1=0;
@@ -59,7 +61,6 @@ void main(void) {
 		//mode 2 = rickroll
 		//mode 3 = Piano
 		
-		uart_transmit('A');
 		
 		//display which mode you are in
 		if (mode == 1) {
@@ -78,10 +79,10 @@ void main(void) {
 			light9 = 0;
 			if (mode >= 3) {
 				mode = 0;
-				delay(300);
+				delay(buttonDelay);
 			} else {
 				mode++;
-				delay(300);
+				delay(buttonDelay);
 			}
 			light9 = 1;
 		}
@@ -91,10 +92,10 @@ void main(void) {
 			light7 = 0;
 			if (mode <= 1) {
 				mode = 3;
-				delay(300);
+				delay(buttonDelay);
 			} else {
 				mode--;
-				delay(300);
+				delay(buttonDelay);
 			}
 			light7 = 1;
 		}
@@ -102,14 +103,34 @@ void main(void) {
 		//selection mode
 		if (!button8) { //mode is selected
 			if (mode == 1) {
-				//smash mouth
+				light1=0;
+				uart_transmit('S');
+				uart_transmit('M');
+				uart_transmit('A');
+				uart_transmit('S');
+				uart_transmit('H');
+				uart_transmit(' ');
+				uart_transmit('M');
+				uart_transmit('O');
+				uart_transmit('U');
+				uart_transmit('T');
+				uart_transmit('H');
+				light1=1;
 			} else if (mode == 2) {
-				//tune 2
+				uart_transmit('R');
+				uart_transmit('I');
+				uart_transmit('C');
+				uart_transmit('K');
+				uart_transmit(' ');
+				uart_transmit('R');
+				uart_transmit('O');
+				uart_transmit('L');
+				uart_transmit('L');
 			} else if (mode == 3) {
 				light2=1;
 				light3=1;
 				light8=1;
-				delay(100);
+				delay(buttonDelay);
 				piano();
 			}
 		}
@@ -145,7 +166,7 @@ void piano(void) {
 		//exit button
 		if (!button8) {
 			light4 = 1; light5 = 1; light6 = 1;
-			delay(100);
+			delay(buttonDelay);
 			play = 0;
 		}
 	}
@@ -164,7 +185,7 @@ void playsound(unsigned int dur, unsigned int del) {
 void delay (unsigned int time) {
 	unsigned int i, j;
 	for (i=0; i < time; i++) {
-		for (j=0; j<200;j++) {
+		for (j=0; j<5;j++) {
 		}
 	}
 }
@@ -232,9 +253,7 @@ void uart_isr(void) interrupt 4 using 1 {
 }
 
 void uart_transmit(char c) {
-  if (mtxbusy == 0) {
-		mtxbusy = 1;
-		TI = 1;
-		SBUF = c;
-	}
+  while(mtxbusy);
+  mtxbusy = 1;
+  SBUF = c;
 }
