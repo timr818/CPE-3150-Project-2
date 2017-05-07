@@ -1,4 +1,5 @@
 #include <reg932.h>
+#include <uart.h>
 
 sbit light1 = P2^4;
 sbit light2 = P0^5;
@@ -22,7 +23,9 @@ sbit button9 = P2^2;
 
 sbit speaker = P1^7;
 
-unsigned char mode = 1;
+static bit mtxbusy;
+
+unsigned char mode;
 							
 unsigned char smStart;
 unsigned char smEnd;
@@ -32,12 +35,22 @@ unsigned char rrEnd;
 void delay(unsigned int time);
 void playsound(unsigned int dur, unsigned int del);
 void piano(void);
+void uart_init (void);
+void uart_isr(void);
+void uart_transmit(char c);
+
+char trans;
 
 void main(void) {
+	mode = 1;
+	
 	//initialize the ports so buttons and lights work
 	P2M1=0;
 	P1M1=0x2F&P1M1;
 	P0M1=0;
+	
+	trans = 65;
+	uart_init(); //initialize serial stuff
 	
 	while(1) { //do FOREVER!!! MUWAHAHAHA
 		light8=0;
@@ -45,6 +58,8 @@ void main(void) {
 		//mode 1 = Smashmouth
 		//mode 2 = rickroll
 		//mode 3 = Piano
+		
+		uart_transmit('A');
 		
 		//display which mode you are in
 		if (mode == 1) {
@@ -63,10 +78,10 @@ void main(void) {
 			light9 = 0;
 			if (mode >= 3) {
 				mode = 0;
-				delay(800);
+				delay(300);
 			} else {
 				mode++;
-				delay(800);
+				delay(300);
 			}
 			light9 = 1;
 		}
@@ -76,10 +91,10 @@ void main(void) {
 			light7 = 0;
 			if (mode <= 1) {
 				mode = 3;
-				delay(800);
+				delay(300);
 			} else {
 				mode--;
-				delay(800);
+				delay(300);
 			}
 			light7 = 1;
 		}
@@ -151,5 +166,75 @@ void delay (unsigned int time) {
 	for (i=0; i < time; i++) {
 		for (j=0; j<200;j++) {
 		}
+	}
+}
+
+void uart_init (void) {
+  // configure UART
+  // clear SMOD0
+  PCON &= ~0x40;
+  SCON = 0x50;
+  // set or clear SMOD1
+  PCON &= 0x7F;
+  PCON |= (0 << 8);
+  SSTAT = 0x00;
+
+  // enable break detect
+  AUXR1 |= 0x40;
+
+  // configure baud rate generator
+  //BRGCON = 0x00;
+  //BRGR0 = 0xF0;
+  //BRGR1 = 0x02;
+  //BRGCON = 0x03;
+	EA = 1;
+	ET1 = 1;
+	TMOD = 0x21;
+	TH1 = -3;
+	TR1 = 1;
+	
+
+  // TxD = push-pull, RxD = input
+  P1M1 = 0x02;
+  P1M2 = 0x01;
+
+  // initially not busy
+  mtxbusy = 0;
+
+  // set isr priority to 0
+  IP0 = 1;
+  IP0H = 1;
+  
+  // enable uart interrupt
+  ES = 1;
+  EA = 1;
+
+
+} // uart_init
+
+
+void uart_isr(void) interrupt 4 using 1 {
+  if (RI)
+  {
+    //do nothing upon receiving stuff
+		
+    // clear interrupt flag
+    RI = 0;
+  }
+
+  if (TI)
+  {
+    // clear interrupt flag
+    TI = 0;
+    // no longer busy
+    mtxbusy = 0;
+  }
+}
+
+void uart_transmit(char c) {
+  if (mtxbusy == 0) {
+		mtxbusy = 1;
+		TI = 1;
+		SBUF = c;
 	}
 }
