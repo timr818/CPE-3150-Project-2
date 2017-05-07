@@ -20,45 +20,119 @@ sbit button7 = P2^1;
 sbit button8 = P0^3;
 sbit button9 = P2^2;
 
-unsigned char mode = 0;
+sbit speaker = P1^7;
 
-void main() {
+unsigned char mode = 1;
+							
+unsigned char smStart;
+unsigned char smEnd;
+unsigned char rrStart;
+unsigned char rrEnd;
+
+void delay(unsigned int time);
+void playsound(unsigned int dur, unsigned int del);
+void piano(void);
+
+void main(void) {
+	P2M1=0;
+	P1M1=0x2F&P1M1;
+	P0M1=0;
+	
+	light8=0;
 	while(1) {
-		if (mode == 0) {
-			light3 = 1;
-			light2 = 0;
-		} else if (mode == 1) {
-			light2 = 1;
+		if (mode == 1) {
 			light3 = 0;
-		} else if (mode == 2) {
 			light2 = 1;
+		} else if (mode == 2) {
+			light2 = 0;
+			light3 = 1;
+		} else if (mode == 3) {
+			light2 = 0;
 			light3 = 0;
 		}
 		
-		if (button9) {
-			if (mode == 3) {
+		if (!button9) {
+			light9 = 0;
+			if (mode >= 3) {
 				mode = 0;
+				delay(800);
 			} else {
 				mode++;
+				delay(800);
 			}
+			light9 = 1;
 		}
 		
-		if (button7) {
-			if (mode == 0) {
+		if (!button7) {
+			light7 = 0;
+			if (mode <= 1) {
 				mode = 3;
+				delay(800);
 			} else {
 				mode--;
+				delay(800);
 			}
+			light7 = 1;
 		}
 		
-		if (button8) { //if mode is selected
+		if (!button8) { //mode is selected
 			if (mode == 1) {
 				//smash mouth
 			} else if (mode == 2) {
 				//tune 2
 			} else if (mode == 3) {
-				//piano
+				light2=1;
+				light3=1;
+				light8=1;
+				delay(100);
+				piano();
 			}
+		}
+	}
+}
+
+void piano(void) {
+	unsigned char play = 1;
+	light4 = 0; light5 = 0; light6 = 0;
+	while(play) {
+		if (!button4) {
+			light4 = 1;
+			playsound(5, 7);
+			light4 = 0;
+		}
+		
+		if (!button5) {
+			light5 = 1;
+			playsound(5, 5);
+			light5 = 0;
+		}
+		
+		if (!button6) {
+			light6 = 1;
+			playsound(5, 3);
+			light6 = 0;
+		}
+		
+		if (!button8) {
+			light4 = 1; light5 = 1; light6 = 1;
+			delay(100);
+			play = 0;
+		}
+	}
+}
+
+void playsound(unsigned int dur, unsigned int del) {
+	unsigned int i;
+	for (i=0; i<dur; i++) {
+		speaker = ~speaker;
+		delay(del);
+	}
+}
+
+void delay (unsigned int time) {
+	unsigned int i, j;
+	for (i=0; i < time; i++) {
+		for (j=0; j<200;j++) {
 		}
 	}
 }

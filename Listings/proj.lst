@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   PROJ                                                                  05/06/2017 17:14:46 PAGE 1   
+C51 COMPILER V9.54   PROJ                                                                  05/06/2017 20:23:11 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE PROJ
@@ -30,58 +30,133 @@ line level    source
   20          sbit button8 = P0^3;
   21          sbit button9 = P2^2;
   22          
-  23          unsigned char mode = 0;
+  23          sbit speaker = P1^7;
   24          
-  25          void main() {
-  26   1        while(1) {
-  27   2          if (mode == 0) {
-  28   3            light3 = 1;
-  29   3            light2 = 0;
-  30   3          } else if (mode == 1) {
-  31   3            light2 = 1;
-  32   3            light3 = 0;
-  33   3          } else if (mode == 2) {
-  34   3            light2 = 1;
-  35   3            light3 = 0;
-  36   3          }
-  37   2          
-  38   2          if (button9) {
-  39   3            if (mode == 3) {
-  40   4              mode = 0;
-  41   4            } else {
-  42   4              mode++;
-  43   4            }
-  44   3          }
-  45   2          
-  46   2          if (button7) {
-  47   3            if (mode == 0) {
-  48   4              mode = 3;
-  49   4            } else {
-  50   4              mode--;
-  51   4            }
+  25          unsigned char mode = 1;
+  26                        
+  27          unsigned char smStart;
+  28          unsigned char smEnd;
+  29          unsigned char rrStart;
+  30          unsigned char rrEnd;
+  31          
+  32          void delay(unsigned int time);
+  33          void playsound(unsigned int dur, unsigned int del);
+  34          void piano(void);
+  35          
+  36          void main(void) {
+  37   1        P2M1=0;
+  38   1        P1M1=0x2F&P1M1;
+  39   1        P0M1=0;
+  40   1        
+  41   1        
+  42   1        while(1) {
+  43   2          if (mode == 1) {
+  44   3            light3 = 0;
+  45   3            light2 = 1;
+  46   3          } else if (mode == 2) {
+  47   3            light2 = 0;
+  48   3            light3 = 1;
+  49   3          } else if (mode == 3) {
+  50   3            light2 = 0;
+  51   3            light3 = 0;
   52   3          }
   53   2          
-  54   2          if (button8) { //if mode is selected
-C51 COMPILER V9.54   PROJ                                                                  05/06/2017 17:14:46 PAGE 2   
+  54   2          if (!button9) {
+C51 COMPILER V9.54   PROJ                                                                  05/06/2017 20:23:11 PAGE 2   
 
-  55   3            if (mode == 1) {
-  56   4              //smash mouth
-  57   4            } else if (mode == 2) {
-  58   4              //tune 2
-  59   4            } else if (mode == 3) {
-  60   4              //piano
-  61   4            }
-  62   3          }
-  63   2        }
-  64   1      }
+  55   3            light9 = 0;
+  56   3            if (mode >= 3) {
+  57   4              mode = 0;
+  58   4              delay(800);
+  59   4            } else {
+  60   4              mode++;
+  61   4              delay(800);
+  62   4            }
+  63   3            light9 = 1;
+  64   3          }
+  65   2          
+  66   2          if (!button7) {
+  67   3            light7 = 0;
+  68   3            if (mode <= 1) {
+  69   4              mode = 3;
+  70   4              delay(800);
+  71   4            } else {
+  72   4              mode--;
+  73   4              delay(800);
+  74   4            }
+  75   3            light7 = 1;
+  76   3          }
+  77   2          
+  78   2          if (!button8) { //mode is selected
+  79   3            if (mode == 1) {
+  80   4              //smash mouth
+  81   4            } else if (mode == 2) {
+  82   4              //tune 2
+  83   4            } else if (mode == 3) {
+  84   4              light2=1;
+  85   4              light3=1;
+  86   4              delay(100);
+  87   4              piano();
+  88   4            }
+  89   3          }
+  90   2        }
+  91   1      }
+  92          
+  93          void piano(void) {
+  94   1        unsigned char play = 1;
+  95   1        light4 = 0; light5 = 0; light6 = 0;
+  96   1        while(play) {
+  97   2          if (!button4) {
+  98   3            light4 = 1;
+  99   3            playsound(5, 7);
+ 100   3            light4 = 0;
+ 101   3          }
+ 102   2          
+ 103   2          if (!button5) {
+ 104   3            light5 = 1;
+ 105   3            playsound(5, 5);
+ 106   3            light5 = 0;
+ 107   3          }
+ 108   2          
+ 109   2          if (!button6) {
+ 110   3            light6 = 1;
+ 111   3            playsound(5, 3);
+ 112   3            light6 = 0;
+ 113   3          }
+ 114   2          
+ 115   2          if (!button8) {
+ 116   3            light4 = 1; light5 = 1; light6 = 1;
+C51 COMPILER V9.54   PROJ                                                                  05/06/2017 20:23:11 PAGE 3   
+
+ 117   3            delay(100);
+ 118   3            play = 0;
+ 119   3          }
+ 120   2        }
+ 121   1      }
+ 122          
+ 123          void playsound(unsigned int dur, unsigned int del) {
+ 124   1        unsigned int i;
+ 125   1        for (i=0; i<dur; i++) {
+ 126   2          speaker = ~speaker;
+ 127   2          delay(del);
+ 128   2        }
+ 129   1      }
+ 130          
+ 131          void delay (unsigned int time) {
+ 132   1        unsigned int i, j;
+ 133   1        for (i=0; i < time; i++) {
+ 134   2          for (j=0; j<200;j++) {
+ 135   3          }
+ 136   2        }
+ 137   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     77    ----
+   CODE SIZE        =    284    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      1    ----
+   DATA SIZE        =      5       7
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

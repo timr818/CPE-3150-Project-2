@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        05/06/2017  17:14:46  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/06/2017  20:23:11  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -22,27 +22,45 @@ LINK MAP OF MODULE:  .\Objects\Project2 (PROJ)
 
             * * * * * * *   D A T A   M E M O R Y   * * * * * * *
             REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
-            DATA    0008H     0001H     UNIT         ?DT?PROJ
-            IDATA   0009H     0001H     UNIT         ?STACK
+            DATA    0008H     0007H     UNIT         _DATA_GROUP_
+            DATA    000FH     0005H     UNIT         ?DT?PROJ
+            IDATA   0014H     0001H     UNIT         ?STACK
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
                     0003H     07FDH                  *** GAP ***
             CODE    0800H     008CH     UNIT         ?C_C51STARTUP
-            CODE    088CH     004DH     UNIT         ?PR?MAIN?PROJ
-            CODE    08D9H     0004H     UNIT         ?C_INITSEG
+            CODE    088CH     0083H     UNIT         ?PR?MAIN?PROJ
+            CODE    090FH     0047H     UNIT         ?PR?PIANO?PROJ
+            CODE    0956H     0032H     UNIT         ?PR?_PLAYSOUND?PROJ
+            CODE    0988H     0020H     UNIT         ?PR?_DELAY?PROJ
+            CODE    09A8H     0004H     UNIT         ?C_INITSEG
 
 
 
 OVERLAY MAP OF MODULE:   .\Objects\Project2 (PROJ)
 
 
-SEGMENT
-  +--> CALLED SEGMENT
----------------------
-?C_C51STARTUP
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
   +--> ?PR?MAIN?PROJ
   +--> ?C_INITSEG
+
+?PR?MAIN?PROJ                  -----    -----
+  +--> ?PR?_DELAY?PROJ
+  +--> ?PR?PIANO?PROJ
+
+?PR?PIANO?PROJ                 0008H    0001H
+  +--> ?PR?_PLAYSOUND?PROJ
+  +--> ?PR?_DELAY?PROJ
+
+?PR?_PLAYSOUND?PROJ            0009H    0006H
+  +--> ?PR?_DELAY?PROJ
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/06/2017  20:23:11  PAGE 2
+
 
 
 
@@ -53,68 +71,166 @@ SYMBOL TABLE OF MODULE:  .\Objects\Project2 (PROJ)
 
   -------         MODULE        PROJ
   C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0084H         PUBLIC        P0M1
+  D:0091H         PUBLIC        P1M1
   D:0080H         PUBLIC        P0
+  D:00A4H         PUBLIC        P2M1
   D:0090H         PUBLIC        P1
   D:00A0H         PUBLIC        P2
   D:00B0H         PUBLIC        P3
   D:00A8H         PUBLIC        IEN0
   D:00E8H         PUBLIC        IEN1
-BL51 BANKED LINKER/LOCATER V6.22                                                      05/06/2017  17:14:46  PAGE 2
-
-
+  C:0988H         PUBLIC        _delay
+  C:090FH         PUBLIC        piano
   C:088CH         PUBLIC        main
-  D:0008H         PUBLIC        mode
+  D:000FH         PUBLIC        mode
   D:0098H         PUBLIC        SCON
   D:0088H         PUBLIC        TCON
   D:00B8H         PUBLIC        IP0
   D:00C8H         PUBLIC        TCR20
   B:0080H.5       PUBLIC        light2
   B:00A0H.7       PUBLIC        light3
+  B:0080H.6       PUBLIC        light4
+  B:0090H.6       PUBLIC        light5
+  B:0080H.4       PUBLIC        light6
+  B:00A0H.5       PUBLIC        light7
+  B:0080H.2       PUBLIC        button4
+  B:00A0H.6       PUBLIC        light9
+  B:0090H.4       PUBLIC        button5
+  B:0080H.0       PUBLIC        button6
   B:00A0H.1       PUBLIC        button7
   B:0080H.3       PUBLIC        button8
   B:00A0H.2       PUBLIC        button9
   D:00D8H         PUBLIC        I2CON
+  C:095CH         PUBLIC        _playsound
+  B:0090H.7       PUBLIC        speaker
+  D:0010H         PUBLIC        smStart
+  D:0011H         PUBLIC        rrStart
+  D:0012H         PUBLIC        smEnd
   D:00D0H         PUBLIC        PSW
+  D:0013H         PUBLIC        rrEnd
   -------         PROC          MAIN
-  C:088CH         LINE#         25
-  C:088CH         LINE#         26
-  C:088CH         LINE#         27
-  C:0890H         LINE#         28
-  C:0892H         LINE#         29
-  C:0894H         LINE#         30
-  C:089BH         LINE#         31
-  C:089BH         LINE#         32
-  C:089BH         LINE#         33
-  C:08A2H         LINE#         34
-  C:08A4H         LINE#         35
-  C:08A6H         LINE#         36
-  C:08A6H         LINE#         38
-  C:08A9H         LINE#         39
-  C:08AEH         LINE#         40
-  C:08B1H         LINE#         41
-  C:08B3H         LINE#         42
-  C:08B5H         LINE#         43
-  C:08B5H         LINE#         44
-  C:08B5H         LINE#         46
-  C:08B8H         LINE#         47
-  C:08BCH         LINE#         48
-  C:08BFH         LINE#         49
-  C:08C1H         LINE#         50
-  C:08C3H         LINE#         51
-  C:08C3H         LINE#         52
-  C:08C3H         LINE#         54
-  C:08C6H         LINE#         55
-  C:08CCH         LINE#         57
-  C:08D2H         LINE#         59
-  C:08D7H         LINE#         61
-  C:08D7H         LINE#         62
-  C:08D7H         LINE#         63
+  C:088CH         LINE#         36
+  C:088CH         LINE#         37
+  C:088FH         LINE#         38
+  C:0892H         LINE#         39
+  C:0894H         LINE#         42
+  C:0894H         LINE#         43
+  C:0899H         LINE#         44
+  C:089BH         LINE#         45
+  C:089DH         LINE#         46
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/06/2017  20:23:11  PAGE 3
+
+
+  C:08A4H         LINE#         47
+  C:08A6H         LINE#         48
+  C:08A8H         LINE#         49
+  C:08AFH         LINE#         50
+  C:08B1H         LINE#         51
+  C:08B3H         LINE#         52
+  C:08B3H         LINE#         54
+  C:08B6H         LINE#         55
+  C:08B8H         LINE#         56
+  C:08BFH         LINE#         57
+  C:08C2H         LINE#         58
+  C:08C2H         LINE#         59
+  C:08C4H         LINE#         60
+  C:08C6H         LINE#         61
+  C:08CDH         LINE#         62
+  C:08CDH         LINE#         63
+  C:08CFH         LINE#         64
+  C:08CFH         LINE#         66
+  C:08D2H         LINE#         67
+  C:08D4H         LINE#         68
+  C:08DBH         LINE#         69
+  C:08DEH         LINE#         70
+  C:08DEH         LINE#         71
+  C:08E0H         LINE#         72
+  C:08E2H         LINE#         73
+  C:08E9H         LINE#         74
+  C:08E9H         LINE#         75
+  C:08EBH         LINE#         76
+  C:08EBH         LINE#         78
+  C:08EEH         LINE#         79
+  C:08F4H         LINE#         81
+  C:08FAH         LINE#         83
+  C:0900H         LINE#         84
+  C:0902H         LINE#         85
+  C:0904H         LINE#         86
+  C:090AH         LINE#         87
+  C:090DH         LINE#         88
+  C:090DH         LINE#         89
+  C:090DH         LINE#         90
   -------         ENDPROC       MAIN
+  -------         PROC          PIANO
+  -------         DO            
+  D:0008H         SYMBOL        play
+  -------         ENDDO         
+  C:090FH         LINE#         93
+  C:090FH         LINE#         94
+  C:0912H         LINE#         95
+  C:0918H         LINE#         96
+  C:091CH         LINE#         97
+  C:091FH         LINE#         98
+  C:0921H         LINE#         99
+  C:0926H         LINE#         100
+  C:0928H         LINE#         101
+  C:0928H         LINE#         103
+  C:092BH         LINE#         104
+  C:092DH         LINE#         105
+  C:0932H         LINE#         106
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/06/2017  20:23:11  PAGE 4
+
+
+  C:0934H         LINE#         107
+  C:0934H         LINE#         109
+  C:0937H         LINE#         110
+  C:0939H         LINE#         111
+  C:093EH         LINE#         112
+  C:0940H         LINE#         113
+  C:0940H         LINE#         115
+  C:0943H         LINE#         116
+  C:0949H         LINE#         117
+  C:0950H         LINE#         118
+  C:0953H         LINE#         119
+  C:0953H         LINE#         120
+  C:0955H         LINE#         121
+  -------         ENDPROC       PIANO
+  C:0956H         SYMBOL        L?0045
+  -------         PROC          L?0044
+  -------         ENDPROC       L?0044
+  C:0956H         SYMBOL        L?0045
+  -------         PROC          _PLAYSOUND
+  D:0009H         SYMBOL        dur
+  D:000BH         SYMBOL        del
+  -------         DO            
+  D:000DH         SYMBOL        i
+  -------         ENDDO         
+  C:095CH         LINE#         123
+  C:0964H         LINE#         125
+  C:0974H         LINE#         126
+  C:0976H         LINE#         127
+  C:097DH         LINE#         128
+  C:0987H         LINE#         129
+  -------         ENDPROC       _PLAYSOUND
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        time
+  -------         DO            
+  D:0004H         SYMBOL        i
+  D:0002H         SYMBOL        j
+  -------         ENDDO         
+  C:0988H         LINE#         131
+  C:0988H         LINE#         133
+  C:0992H         LINE#         134
+  C:0995H         LINE#         135
+  C:09A0H         LINE#         136
+  C:09A7H         LINE#         137
+  -------         ENDPROC       _DELAY
   -------         ENDMOD        PROJ
 
 ******************************************************************************
-* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0050H BYTE ( 3%) *
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 011FH BYTE (14%) *
 ******************************************************************************
 
-Program Size: data=10.0 xdata=0 code=224
+Program Size: data=21.0 xdata=0 code=431
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
