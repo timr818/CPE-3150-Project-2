@@ -34,12 +34,19 @@ void playsound(unsigned int dur, unsigned int del);
 void piano(void);
 
 void main(void) {
+	//initialize the ports so buttons and lights work
 	P2M1=0;
 	P1M1=0x2F&P1M1;
 	P0M1=0;
 	
-	light8=0;
-	while(1) {
+	while(1) { //do FOREVER!!! MUWAHAHAHA
+		light8=0;
+		
+		//mode 1 = Smashmouth
+		//mode 2 = rickroll
+		//mode 3 = Piano
+		
+		//display which mode you are in
 		if (mode == 1) {
 			light3 = 0;
 			light2 = 1;
@@ -51,6 +58,7 @@ void main(void) {
 			light3 = 0;
 		}
 		
+		//increment button.
 		if (!button9) {
 			light9 = 0;
 			if (mode >= 3) {
@@ -63,6 +71,7 @@ void main(void) {
 			light9 = 1;
 		}
 		
+		//decrement button
 		if (!button7) {
 			light7 = 0;
 			if (mode <= 1) {
@@ -75,6 +84,7 @@ void main(void) {
 			light7 = 1;
 		}
 		
+		//selection mode
 		if (!button8) { //mode is selected
 			if (mode == 1) {
 				//smash mouth
@@ -92,27 +102,32 @@ void main(void) {
 }
 
 void piano(void) {
-	unsigned char play = 1;
-	light4 = 0; light5 = 0; light6 = 0;
+	unsigned char play = 1; //boolean for quiting the piano mode
+	light4 = 0; light5 = 0; light6 = 0; //turn on piano key lights
 	while(play) {
+		
+		//first key
 		if (!button4) {
 			light4 = 1;
 			playsound(5, 7);
 			light4 = 0;
 		}
 		
+		//second key
 		if (!button5) {
 			light5 = 1;
 			playsound(5, 5);
 			light5 = 0;
 		}
 		
+		//third key
 		if (!button6) {
 			light6 = 1;
 			playsound(5, 3);
 			light6 = 0;
 		}
 		
+		//exit button
 		if (!button8) {
 			light4 = 1; light5 = 1; light6 = 1;
 			delay(100);
@@ -121,6 +136,7 @@ void piano(void) {
 	}
 }
 
+//plays a sound for a duration and del determines pitch
 void playsound(unsigned int dur, unsigned int del) {
 	unsigned int i;
 	for (i=0; i<dur; i++) {
@@ -129,6 +145,7 @@ void playsound(unsigned int dur, unsigned int del) {
 	}
 }
 
+//delay for a time
 void delay (unsigned int time) {
 	unsigned int i, j;
 	for (i=0; i < time; i++) {
