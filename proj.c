@@ -1,4 +1,5 @@
 #include <reg932.h>
+#include "uart.h"
 
 sbit light1 = P2^4;
 sbit light2 = P0^5;
@@ -22,43 +23,29 @@ sbit button9 = P2^2;
 
 unsigned char mode = 0;
 
-void main() {
+void main( void ) {
+	
+	EA = 1;	
+	uart_init();
+	
+  TH1 = -3;
+  TR1 = 1;
+	TI = 0;
+
+	
+	//Ports
+	P3M1 = 0;
+	P2M1=0;
+	P1M1=0x2F&P1M1;
+	P0M1=0;
+
+	light1 = 0;
+	light2 = 1;
+	
+	
 	while(1) {
-		if (mode == 0) {
-			light3 = 1;
-			light2 = 0;
-		} else if (mode == 1) {
-			light2 = 1;
-			light3 = 0;
-		} else if (mode == 2) {
-			light2 = 1;
-			light3 = 0;
-		}
-		
-		if (button9) {
-			if (mode == 3) {
-				mode = 0;
-			} else {
-				mode++;
-			}
-		}
-		
-		if (button7) {
-			if (mode == 0) {
-				mode = 3;
-			} else {
-				mode--;
-			}
-		}
-		
-		if (button8) { //if mode is selected
-			if (mode == 1) {
-				//smash mouth
-			} else if (mode == 2) {
-				//tune 2
-			} else if (mode == 3) {
-				//piano
-			}
-		}
+		uart_transmit("Hello");
+		light2 = ~light2;
+		light7 = 0;
 	}
 }
