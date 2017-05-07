@@ -1,3 +1,0 @@
-".\Objects\proj.obj" 
-TO ".\Objects\Project2" 
-PRINT(".\Listings\Project2.m51")

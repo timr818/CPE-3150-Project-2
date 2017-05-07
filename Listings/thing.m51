@@ -1,0 +1,438 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/07/2017  16:15:08  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\proj.obj TO .\Objects\thing PRINT (.\Listings\thing.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\proj.obj (PROJ)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?IMUL)
+
+
+LINK MAP OF MODULE:  .\Objects\thing (PROJ)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000DH     UNIT         ?DT?PROJ
+            DATA    0015H     0007H     UNIT         _DATA_GROUP_
+                    001CH     0004H                  *** GAP ***
+            BIT     0020H.0   0000H.1   UNIT         ?BI?PROJ
+                    0020H.1   0000H.7                *** GAP ***
+            IDATA   0021H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     0008H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+                    000EH     0015H                  *** GAP ***
+            CODE    0023H     0003H     ABSOLUTE     
+                    0026H     07DAH                  *** GAP ***
+            CODE    0800H     0112H     UNIT         ?PR?MAIN?PROJ
+            CODE    0912H     00DCH     UNIT         ?CO?PROJ
+            CODE    09EEH     0094H     UNIT         ?PR?ALLSTAR?PROJ
+            CODE    0A82H     0094H     UNIT         ?PR?RICKROLL?PROJ
+            CODE    0B16H     0043H     UNIT         ?PR?PIANO?PROJ
+            CODE    0B59H     0032H     UNIT         ?PR?_PLAYSOUND?PROJ
+            CODE    0B8BH     002DH     UNIT         ?PR?UART_INIT?PROJ
+            CODE    0BB8H     0024H     UNIT         ?PR?_DELAY?PROJ
+            CODE    0BDCH     001AH     UNIT         ?PR?SQR_WAVE?PROJ
+            CODE    0BF6H     0012H     UNIT         ?C?LIB_CODE
+            CODE    0C08H     000DH     UNIT         ?PR?UART_ISR?PROJ
+            CODE    0C15H     000CH     UNIT         ?C_C51STARTUP
+            CODE    0C21H     0008H     UNIT         ?PR?_UART_TRANSMIT?PROJ
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\thing (PROJ)
+
+
+SEGMENT                           DATA_GROUP 
+  +--> CALLED SEGMENT           START    LENGTH
+-----------------------------------------------
+?C_C51STARTUP                   -----    -----
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/07/2017  16:15:08  PAGE 2
+
+
+  +--> ?PR?MAIN?PROJ
+
+?PR?MAIN?PROJ                   -----    -----
+  +--> ?PR?UART_INIT?PROJ
+  +--> ?PR?_DELAY?PROJ
+  +--> ?PR?_UART_TRANSMIT?PROJ
+  +--> ?PR?ALLSTAR?PROJ
+  +--> ?PR?RICKROLL?PROJ
+  +--> ?PR?PIANO?PROJ
+
+?PR?ALLSTAR?PROJ                -----    -----
+  +--> ?PR?_DELAY?PROJ
+  +--> ?CO?PROJ
+
+?PR?RICKROLL?PROJ               -----    -----
+  +--> ?PR?_DELAY?PROJ
+  +--> ?CO?PROJ
+
+?PR?PIANO?PROJ                  0015H    0001H
+  +--> ?PR?_PLAYSOUND?PROJ
+  +--> ?PR?_DELAY?PROJ
+
+?PR?_PLAYSOUND?PROJ             0016H    0006H
+  +--> ?PR?_DELAY?PROJ
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\thing (PROJ)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        PROJ
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0084H         PUBLIC        P0M1
+  D:0091H         PUBLIC        P1M1
+  D:0080H         PUBLIC        P0
+  D:00A4H         PUBLIC        P2M1
+  D:0092H         PUBLIC        P1M2
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IEN0
+  D:00E8H         PUBLIC        IEN1
+  C:0912H         PUBLIC        SmashMouth
+  D:00BAH         PUBLIC        SSTAT
+  C:0BBCH         PUBLIC        _delay
+  D:00B7H         PUBLIC        IP0H
+  C:0976H         PUBLIC        GiveYouUp
+  D:0008H         PUBLIC        buttonDelay
+  C:0C21H         PUBLIC        _uart_transmit
+  B:00A8H.4       PUBLIC        ES
+  C:0B16H         PUBLIC        piano
+  D:000AH         PUBLIC        index
+  B:0098H.0       PUBLIC        RI
+  B:0098H.1       PUBLIC        TI
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/07/2017  16:15:08  PAGE 3
+
+
+  B:0020H.0       SYMBOL        mtxbusy
+  C:0800H         PUBLIC        main
+  D:000BH         PUBLIC        mode
+  D:000CH         PUBLIC        trans
+  D:000DH         PUBLIC        freq
+  D:0099H         PUBLIC        SBUF
+  D:0087H         PUBLIC        PCON
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  D:00BDH         PUBLIC        BRGCON
+  B:00A8H.1       PUBLIC        ET0
+  D:00B8H         PUBLIC        IP0
+  D:000FH         PUBLIC        dur
+  D:00C8H         PUBLIC        TCR20
+  D:008CH         PUBLIC        TH0
+  B:0080H.5       PUBLIC        light2
+  B:00A0H.7       PUBLIC        light3
+  B:0080H.6       PUBLIC        light4
+  B:0090H.6       PUBLIC        light5
+  D:008AH         PUBLIC        TL0
+  B:0080H.4       PUBLIC        light6
+  B:00A0H.5       PUBLIC        light7
+  B:0080H.7       PUBLIC        light8
+  B:0080H.2       PUBLIC        button4
+  B:00A0H.6       PUBLIC        light9
+  B:0090H.4       PUBLIC        button5
+  C:0B8BH         PUBLIC        uart_init
+  B:0080H.0       PUBLIC        button6
+  B:0088H.4       PUBLIC        TR0
+  B:00A0H.1       PUBLIC        button7
+  B:0080H.3       PUBLIC        button8
+  B:00A0H.2       PUBLIC        button9
+  D:00D8H         PUBLIC        I2CON
+  C:0944H         PUBLIC        durSmashMouth
+  D:00BEH         PUBLIC        BRGR0
+  D:00BFH         PUBLIC        BRGR1
+  C:09B2H         PUBLIC        durGiveYouUp
+  C:0B5FH         PUBLIC        _playsound
+  C:0A82H         PUBLIC        rickroll
+  C:0BDCH         PUBLIC        sqr_wave
+  C:0C08H         PUBLIC        uart_isr
+  B:0090H.7       PUBLIC        speaker
+  D:0011H         PUBLIC        smStart
+  D:00A2H         PUBLIC        AUXR1
+  D:0012H         PUBLIC        rrStart
+  C:09EEH         PUBLIC        allstar
+  D:0013H         PUBLIC        smEnd
+  D:00D0H         PUBLIC        PSW
+  D:0014H         PUBLIC        rrEnd
+  -------         PROC          MAIN
+  C:0800H         LINE#         100
+  C:0800H         LINE#         101
+  C:0803H         LINE#         102
+  C:0809H         LINE#         104
+  C:080CH         LINE#         105
+  C:080EH         LINE#         106
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/07/2017  16:15:08  PAGE 4
+
+
+  C:0810H         LINE#         109
+  C:0813H         LINE#         110
+  C:0816H         LINE#         111
+  C:0818H         LINE#         113
+  C:081BH         LINE#         114
+  C:081EH         LINE#         116
+  C:081EH         LINE#         117
+  C:0820H         LINE#         125
+  C:0825H         LINE#         126
+  C:0827H         LINE#         127
+  C:0829H         LINE#         128
+  C:0830H         LINE#         129
+  C:0832H         LINE#         130
+  C:0834H         LINE#         131
+  C:083BH         LINE#         132
+  C:083DH         LINE#         133
+  C:083FH         LINE#         134
+  C:083FH         LINE#         137
+  C:0842H         LINE#         138
+  C:0844H         LINE#         139
+  C:084BH         LINE#         140
+  C:084EH         LINE#         141
+  C:084EH         LINE#         142
+  C:0850H         LINE#         143
+  C:0852H         LINE#         144
+  C:0855H         LINE#         145
+  C:0855H         LINE#         146
+  C:0857H         LINE#         147
+  C:0857H         LINE#         150
+  C:085AH         LINE#         151
+  C:085CH         LINE#         152
+  C:0863H         LINE#         153
+  C:0866H         LINE#         154
+  C:0866H         LINE#         155
+  C:0868H         LINE#         156
+  C:086AH         LINE#         157
+  C:086DH         LINE#         158
+  C:086DH         LINE#         159
+  C:086FH         LINE#         160
+  C:086FH         LINE#         163
+  C:0872H         LINE#         164
+  C:0878H         LINE#         165
+  C:087DH         LINE#         166
+  C:0882H         LINE#         167
+  C:0887H         LINE#         168
+  C:088CH         LINE#         169
+  C:0891H         LINE#         170
+  C:0896H         LINE#         171
+  C:089BH         LINE#         172
+  C:08A0H         LINE#         173
+  C:08A5H         LINE#         174
+  C:08AAH         LINE#         175
+  C:08AFH         LINE#         176
+  C:08B4H         LINE#         178
+  C:08B7H         LINE#         179
+  C:08B7H         LINE#         180
+  C:08BFH         LINE#         181
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/07/2017  16:15:08  PAGE 5
+
+
+  C:08C4H         LINE#         182
+  C:08C9H         LINE#         183
+  C:08CEH         LINE#         184
+  C:08D3H         LINE#         185
+  C:08D8H         LINE#         186
+  C:08DDH         LINE#         187
+  C:08E2H         LINE#         188
+  C:08E7H         LINE#         189
+  C:08ECH         LINE#         190
+  C:08F1H         LINE#         192
+  C:08F4H         LINE#         193
+  C:08F7H         LINE#         194
+  C:0903H         LINE#         195
+  C:0905H         LINE#         196
+  C:0907H         LINE#         197
+  C:0909H         LINE#         198
+  C:090CH         LINE#         199
+  C:090FH         LINE#         200
+  C:090FH         LINE#         201
+  C:090FH         LINE#         202
+  -------         ENDPROC       MAIN
+  -------         PROC          PIANO
+  -------         DO            
+  D:0015H         SYMBOL        play
+  -------         ENDDO         
+  C:0B16H         LINE#         206
+  C:0B16H         LINE#         207
+  C:0B19H         LINE#         208
+  C:0B1FH         LINE#         209
+  C:0B23H         LINE#         212
+  C:0B26H         LINE#         213
+  C:0B28H         LINE#         214
+  C:0B2DH         LINE#         215
+  C:0B2FH         LINE#         216
+  C:0B2FH         LINE#         219
+  C:0B32H         LINE#         220
+  C:0B34H         LINE#         221
+  C:0B39H         LINE#         222
+  C:0B3BH         LINE#         223
+  C:0B3BH         LINE#         226
+  C:0B3EH         LINE#         227
+  C:0B40H         LINE#         228
+  C:0B45H         LINE#         229
+  C:0B47H         LINE#         230
+  C:0B47H         LINE#         233
+  C:0B4AH         LINE#         234
+  C:0B50H         LINE#         235
+  C:0B53H         LINE#         236
+  C:0B56H         LINE#         237
+  C:0B56H         LINE#         238
+  C:0B58H         LINE#         239
+  -------         ENDPROC       PIANO
+  C:0B59H         SYMBOL        L?0076
+  -------         PROC          L?0075
+  -------         ENDPROC       L?0075
+  C:0B59H         SYMBOL        L?0076
+  -------         PROC          _PLAYSOUND
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/07/2017  16:15:08  PAGE 6
+
+
+  D:0016H         SYMBOL        dur
+  D:0018H         SYMBOL        del
+  -------         DO            
+  D:001AH         SYMBOL        i
+  -------         ENDDO         
+  C:0B5FH         LINE#         243
+  C:0B67H         LINE#         245
+  C:0B77H         LINE#         246
+  C:0B79H         LINE#         247
+  C:0B80H         LINE#         248
+  C:0B8AH         LINE#         249
+  -------         ENDPROC       _PLAYSOUND
+  C:0BB8H         SYMBOL        L?0074
+  -------         PROC          L?0073
+  -------         ENDPROC       L?0073
+  C:0BB8H         SYMBOL        L?0074
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        time
+  -------         DO            
+  D:0004H         SYMBOL        i
+  D:0002H         SYMBOL        j
+  -------         ENDDO         
+  C:0BBCH         LINE#         252
+  C:0BBCH         LINE#         254
+  C:0BC6H         LINE#         255
+  C:0BC9H         LINE#         256
+  C:0BD4H         LINE#         257
+  C:0BDBH         LINE#         258
+  -------         ENDPROC       _DELAY
+  -------         PROC          UART_INIT
+  C:0B8BH         LINE#         260
+  C:0B8BH         LINE#         263
+  C:0B8EH         LINE#         264
+  C:0B91H         LINE#         266
+  C:0B94H         LINE#         267
+  C:0B94H         LINE#         268
+  C:0B97H         LINE#         271
+  C:0B9AH         LINE#         275
+  C:0B9CH         LINE#         276
+  C:0B9FH         LINE#         277
+  C:0BA2H         LINE#         278
+  C:0BA5H         LINE#         289
+  C:0BA8H         LINE#         290
+  C:0BABH         LINE#         293
+  C:0BADH         LINE#         296
+  C:0BB0H         LINE#         297
+  C:0BB3H         LINE#         300
+  C:0BB5H         LINE#         301
+  C:0BB7H         LINE#         304
+  -------         ENDPROC       UART_INIT
+  -------         PROC          UART_ISR
+  C:0C08H         LINE#         307
+  C:0C08H         LINE#         308
+  C:0C0BH         LINE#         309
+  C:0C0BH         LINE#         313
+  C:0C0DH         LINE#         314
+  C:0C0DH         LINE#         316
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/07/2017  16:15:08  PAGE 7
+
+
+  C:0C10H         LINE#         317
+  C:0C10H         LINE#         319
+  C:0C12H         LINE#         321
+  C:0C14H         LINE#         322
+  C:0C14H         LINE#         323
+  -------         ENDPROC       UART_ISR
+  -------         PROC          _UART_TRANSMIT
+  D:0007H         SYMBOL        c
+  C:0C21H         LINE#         325
+  C:0C21H         LINE#         326
+  C:0C24H         LINE#         327
+  C:0C26H         LINE#         328
+  C:0C28H         LINE#         329
+  -------         ENDPROC       _UART_TRANSMIT
+  -------         PROC          ALLSTAR
+  C:09EEH         LINE#         331
+  C:09EEH         LINE#         332
+  C:09F1H         LINE#         333
+  C:09F8H         LINE#         334
+  C:0A0FH         LINE#         335
+  C:0A13H         LINE#         336
+  C:0A32H         LINE#         337
+  C:0A34H         LINE#         338
+  C:0A34H         LINE#         339
+  C:0A4CH         LINE#         340
+  C:0A4EH         LINE#         341
+  C:0A64H         LINE#         342
+  C:0A71H         LINE#         343
+  C:0A73H         LINE#         344
+  C:0A75H         LINE#         345
+  C:0A75H         LINE#         346
+  C:0A81H         LINE#         347
+  -------         ENDPROC       ALLSTAR
+  -------         PROC          RICKROLL
+  C:0A82H         LINE#         349
+  C:0A82H         LINE#         350
+  C:0A85H         LINE#         351
+  C:0A8CH         LINE#         352
+  C:0AA3H         LINE#         353
+  C:0AA7H         LINE#         354
+  C:0AC6H         LINE#         355
+  C:0AC8H         LINE#         356
+  C:0AC8H         LINE#         357
+  C:0AE0H         LINE#         358
+  C:0AE2H         LINE#         359
+  C:0AF8H         LINE#         360
+  C:0B05H         LINE#         361
+  C:0B07H         LINE#         362
+  C:0B09H         LINE#         363
+  C:0B09H         LINE#         364
+  C:0B15H         LINE#         365
+  -------         ENDPROC       RICKROLL
+  -------         PROC          SQR_WAVE
+  C:0BDCH         LINE#         367
+  C:0BE0H         LINE#         368
+  C:0BE2H         LINE#         369
+  C:0BEBH         LINE#         370
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/07/2017  16:15:08  PAGE 8
+
+
+  C:0BF1H         LINE#         371
+  -------         ENDPROC       SQR_WAVE
+  -------         ENDMOD        PROJ
+
+  -------         MODULE        ?C?IMUL
+  C:0BF6H         PUBLIC        ?C?IMUL
+  -------         ENDMOD        ?C?IMUL
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0411H BYTE (50%) *
+******************************************************************************
+
+Program Size: data=29.1 xdata=0 code=1074
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
