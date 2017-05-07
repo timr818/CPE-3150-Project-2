@@ -329,8 +329,85 @@ void uart_transmit(char c) {
 }
 
 void allstar() {
+	
+	//display which mode you are in
+		if (mode == 1) {
+			light3 = 0;
+			light2 = 1;
+		} else if (mode == 2) {
+			light2 = 0;
+			light3 = 1;
+		} else if (mode == 3) {
+			light2 = 0;
+			light3 = 0;
+		}
+		
+		//increment button.
+		if (!button9) {
+			light9 = 0;
+			if (mode >= 3) {
+				mode = 0;
+				delay(buttonDelay);
+			} else {
+				mode++;
+				delay(buttonDelay);
+			}
+			light9 = 1;
+		}
+		
+		//decrement button
+		if (!button7) {
+			light7 = 0;
+			if (mode <= 1) {
+				mode = 3;
+				delay(buttonDelay);
+			} else {
+				mode--;
+				delay(buttonDelay);
+			}
+			light7 = 1;
+		}
+		
+		if (!button8) {
+			index = 0;
+		}
+	
 	for(index = 0; index < 25; index++) {
-		delay(1000);
+		//display which mode you are in
+		if (mode == 1) {
+			light3 = 0;
+			light2 = 1;
+		} else if (mode == 2) {
+			light2 = 0;
+			light3 = 1;
+		} else if (mode == 3) {
+			light2 = 0;
+			light3 = 0;
+		}
+		
+		//increment button.
+		if (!button9) {
+			light9 = 0;
+			if (mode >= 3) {
+				mode = 0;
+			} else {
+				mode++;
+			}
+			light9 = 1;
+		}
+		
+		//decrement button
+		if (!button7) {
+			light7 = 0;
+			if (mode <= 1) {
+				mode = 3;
+			} else {
+				mode--;
+			}
+			light7 = 1;
+		}	
+		
+		delay(200);
 		if (SmashMouth[index] != 0) {
 			freq = SmashMouth[index];
 			dur = durSmashMouth[index] * 500;
@@ -348,7 +425,42 @@ void allstar() {
 
 void rickroll() {
 	for(index = 0; index < 30; index++) {
-		delay(1000);
+		
+		//display which mode you are in
+		if (mode == 1) {
+			light3 = 0;
+			light2 = 1;
+		} else if (mode == 2) {
+			light2 = 0;
+			light3 = 1;
+		} else if (mode == 3) {
+			light2 = 0;
+			light3 = 0;
+		}
+		
+		//increment button.
+		if (!button9) {
+			light9 = 0;
+			if (mode >= 3) {
+				mode = 0;
+			} else {
+				mode++;
+			}
+			light9 = 1;
+		}
+		
+		//decrement button
+		if (!button7) {
+			light7 = 0;
+			if (mode <= 1) {
+				mode = 3;
+			} else {
+				mode--;
+			}
+			light7 = 1;
+		}
+		
+		delay(200);
 		if (GiveYouUp[index] != 0) {
 			freq = GiveYouUp[index];
 			dur = durGiveYouUp[index] * 500;

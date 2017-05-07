@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   PROJ                                                                  05/07/2017 16:15:08 PAGE 1   
+C51 COMPILER V9.54   PROJ                                                                  05/07/2017 18:27:06 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE PROJ
@@ -62,7 +62,7 @@ line level    source
   52          
   53          sbit button1 = P2^0;
   54          sbit button2 = P0^1;
-C51 COMPILER V9.54   PROJ                                                                  05/07/2017 16:15:08 PAGE 2   
+C51 COMPILER V9.54   PROJ                                                                  05/07/2017 18:27:06 PAGE 2   
 
   55          sbit button3 = P2^3;
   56          sbit button4 = P0^2;
@@ -126,7 +126,7 @@ line level    source
  111   1        P0M1=0;
  112   1        
  113   1        trans = 65;
-C51 COMPILER V9.54   PROJ                                                                  05/07/2017 16:15:08 PAGE 3   
+C51 COMPILER V9.54   PROJ                                                                  05/07/2017 18:27:06 PAGE 3   
 
  114   1        uart_init(); //initialize serial stuff
  115   1        
@@ -190,7 +190,7 @@ line level    source
  173   4              uart_transmit('U');
  174   4              uart_transmit('T');
  175   4              uart_transmit('H');
-C51 COMPILER V9.54   PROJ                                                                  05/07/2017 16:15:08 PAGE 4   
+C51 COMPILER V9.54   PROJ                                                                  05/07/2017 18:27:06 PAGE 4   
 
  176   4              uart_transmit(' ');
  177   4              
@@ -254,7 +254,7 @@ line level    source
  235   3            delay(buttonDelay);
  236   3            play = 0;
  237   3          }
-C51 COMPILER V9.54   PROJ                                                                  05/07/2017 16:15:08 PAGE 5   
+C51 COMPILER V9.54   PROJ                                                                  05/07/2017 18:27:06 PAGE 5   
 
  238   2        }
  239   1      }
@@ -318,7 +318,7 @@ line level    source
  297   1        IP0H = 1;
  298   1        
  299   1        // enable uart interrupt
-C51 COMPILER V9.54   PROJ                                                                  05/07/2017 16:15:08 PAGE 6   
+C51 COMPILER V9.54   PROJ                                                                  05/07/2017 18:27:06 PAGE 6   
 
  300   1        ES = 1;
  301   1        EA = 1;
@@ -352,52 +352,168 @@ line level    source
  329   1      }
  330          
  331          void allstar() {
- 332   1        for(index = 0; index < 25; index++) {
- 333   2          delay(1000);
- 334   2          if (SmashMouth[index] != 0) {
- 335   3            freq = SmashMouth[index];
- 336   3            dur = durSmashMouth[index] * 500;
- 337   3            TR0 = 1;
- 338   3            delay(dur);
- 339   3          } else if (SmashMouth[index] == 0) {
- 340   3            TR0 = 0;
- 341   3            dur = durSmashMouth[index];
- 342   3            delay(dur * 500);
- 343   3          } else {
- 344   3            TR0 = 0;
- 345   3          }
- 346   2        }
- 347   1      }
- 348          
- 349          void rickroll() {
- 350   1        for(index = 0; index < 30; index++) {
- 351   2          delay(1000);
- 352   2          if (GiveYouUp[index] != 0) {
- 353   3            freq = GiveYouUp[index];
- 354   3            dur = durGiveYouUp[index] * 500;
- 355   3            TR0 = 1;
- 356   3            delay(dur);
- 357   3          } else if (GiveYouUp[index] == 0) {
- 358   3            TR0 = 0;
- 359   3            dur = durGiveYouUp[index];
- 360   3            delay(dur * 500);
- 361   3          } else {
-C51 COMPILER V9.54   PROJ                                                                  05/07/2017 16:15:08 PAGE 7   
+ 332   1        
+ 333   1        //display which mode you are in
+ 334   1          if (mode == 1) {
+ 335   2            light3 = 0;
+ 336   2            light2 = 1;
+ 337   2          } else if (mode == 2) {
+ 338   2            light2 = 0;
+ 339   2            light3 = 1;
+ 340   2          } else if (mode == 3) {
+ 341   2            light2 = 0;
+ 342   2            light3 = 0;
+ 343   2          }
+ 344   1          
+ 345   1          //increment button.
+ 346   1          if (!button9) {
+ 347   2            light9 = 0;
+ 348   2            if (mode >= 3) {
+ 349   3              mode = 0;
+ 350   3              delay(buttonDelay);
+ 351   3            } else {
+ 352   3              mode++;
+ 353   3              delay(buttonDelay);
+ 354   3            }
+ 355   2            light9 = 1;
+ 356   2          }
+ 357   1          
+ 358   1          //decrement button
+ 359   1          if (!button7) {
+ 360   2            light7 = 0;
+ 361   2            if (mode <= 1) {
+C51 COMPILER V9.54   PROJ                                                                  05/07/2017 18:27:06 PAGE 7   
 
- 362   3            TR0 = 0;
- 363   3          }
- 364   2        }
- 365   1      }
- 366          
- 367          void sqr_wave() interrupt 1 {
- 368   1        speaker = ~speaker;
- 369   1        TH0 = -(freq)>>8;
- 370   1        TL0 = -(freq);
- 371   1      }
+ 362   3              mode = 3;
+ 363   3              delay(buttonDelay);
+ 364   3            } else {
+ 365   3              mode--;
+ 366   3              delay(buttonDelay);
+ 367   3            }
+ 368   2            light7 = 1;
+ 369   2          }
+ 370   1          
+ 371   1          if (!button8) {
+ 372   2            index = 0;
+ 373   2          }
+ 374   1        
+ 375   1        for(index = 0; index < 25; index++) {
+ 376   2          //display which mode you are in
+ 377   2          if (mode == 1) {
+ 378   3            light3 = 0;
+ 379   3            light2 = 1;
+ 380   3          } else if (mode == 2) {
+ 381   3            light2 = 0;
+ 382   3            light3 = 1;
+ 383   3          } else if (mode == 3) {
+ 384   3            light2 = 0;
+ 385   3            light3 = 0;
+ 386   3          }
+ 387   2          
+ 388   2          //increment button.
+ 389   2          if (!button9) {
+ 390   3            light9 = 0;
+ 391   3            if (mode >= 3) {
+ 392   4              mode = 0;
+ 393   4            } else {
+ 394   4              mode++;
+ 395   4            }
+ 396   3            light9 = 1;
+ 397   3          }
+ 398   2          
+ 399   2          //decrement button
+ 400   2          if (!button7) {
+ 401   3            light7 = 0;
+ 402   3            if (mode <= 1) {
+ 403   4              mode = 3;
+ 404   4            } else {
+ 405   4              mode--;
+ 406   4            }
+ 407   3            light7 = 1;
+ 408   3          } 
+ 409   2          
+ 410   2          delay(200);
+ 411   2          if (SmashMouth[index] != 0) {
+ 412   3            freq = SmashMouth[index];
+ 413   3            dur = durSmashMouth[index] * 500;
+ 414   3            TR0 = 1;
+ 415   3            delay(dur);
+ 416   3          } else if (SmashMouth[index] == 0) {
+ 417   3            TR0 = 0;
+ 418   3            dur = durSmashMouth[index];
+ 419   3            delay(dur * 500);
+ 420   3          } else {
+ 421   3            TR0 = 0;
+ 422   3          }
+ 423   2        }
+C51 COMPILER V9.54   PROJ                                                                  05/07/2017 18:27:06 PAGE 8   
 
+ 424   1      }
+ 425          
+ 426          void rickroll() {
+ 427   1        for(index = 0; index < 30; index++) {
+ 428   2          
+ 429   2          //display which mode you are in
+ 430   2          if (mode == 1) {
+ 431   3            light3 = 0;
+ 432   3            light2 = 1;
+ 433   3          } else if (mode == 2) {
+ 434   3            light2 = 0;
+ 435   3            light3 = 1;
+ 436   3          } else if (mode == 3) {
+ 437   3            light2 = 0;
+ 438   3            light3 = 0;
+ 439   3          }
+ 440   2          
+ 441   2          //increment button.
+ 442   2          if (!button9) {
+ 443   3            light9 = 0;
+ 444   3            if (mode >= 3) {
+ 445   4              mode = 0;
+ 446   4            } else {
+ 447   4              mode++;
+ 448   4            }
+ 449   3            light9 = 1;
+ 450   3          }
+ 451   2          
+ 452   2          //decrement button
+ 453   2          if (!button7) {
+ 454   3            light7 = 0;
+ 455   3            if (mode <= 1) {
+ 456   4              mode = 3;
+ 457   4            } else {
+ 458   4              mode--;
+ 459   4            }
+ 460   3            light7 = 1;
+ 461   3          }
+ 462   2          
+ 463   2          delay(200);
+ 464   2          if (GiveYouUp[index] != 0) {
+ 465   3            freq = GiveYouUp[index];
+ 466   3            dur = durGiveYouUp[index] * 500;
+ 467   3            TR0 = 1;
+ 468   3            delay(dur);
+ 469   3          } else if (GiveYouUp[index] == 0) {
+ 470   3            TR0 = 0;
+ 471   3            dur = durGiveYouUp[index];
+ 472   3            delay(dur * 500);
+ 473   3          } else {
+ 474   3            TR0 = 0;
+ 475   3          }
+ 476   2        }
+ 477   1      }
+ 478          
+ 479          void sqr_wave() interrupt 1 {
+ 480   1        speaker = ~speaker;
+ 481   1        TH0 = -(freq)>>8;
+ 482   1        TL0 = -(freq);
+ 483   1      }
+
+
+C51 COMPILER V9.54   PROJ                                                                  05/07/2017 18:27:06 PAGE 9   
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    815    ----
+   CODE SIZE        =   1046    ----
    CONSTANT SIZE    =    220    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
