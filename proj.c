@@ -3,6 +3,7 @@
 
 #define OSC_FREQ		7372800
 
+//defining the frequencies for all notes from c4 to b6 globally. 
 #define C4				((OSC_FREQ/4)/261.63) 
 #define Db4				((OSC_FREQ/4)/277.18)
 #define D4				((OSC_FREQ/4)/293.67)
@@ -40,6 +41,7 @@
 #define Bb6				((OSC_FREQ/4)/1864.7) 
 #define B6				((OSC_FREQ/4)/1975.5) 
 
+//assign variables to ports that control the leds globally 
 sbit light1 = P2^4;
 sbit light2 = P0^5;
 sbit light3 = P2^7;
@@ -50,6 +52,7 @@ sbit light7 = P2^5;
 sbit light8 = P0^7;
 sbit light9 = P2^6;
 
+//assign variable to ports that control the buttons globally
 sbit button1 = P2^0;
 sbit button2 = P0^1;
 sbit button3 = P2^3;
@@ -60,11 +63,15 @@ sbit button7 = P2^1;
 sbit button8 = P0^3;
 sbit button9 = P2^2;
 
+//assing a variable to the port controlling the speaker.
 sbit speaker = P1^7;
 
+//tracks the occupation of the serial port
 static bit mtxbusy;
 
+//char to track which mode we are in. for the menu
 unsigned char mode;
+//int to 
 unsigned int buttonDelay;
 							
 unsigned char smStart;
@@ -82,17 +89,20 @@ void uart_init (void);
 void uart_isr(void);
 void uart_transmit(char c);
 void sqr_wave();
+// fucntion call to play song allstar
 void allstar();
+//fucntin call to play song never gonna give you up
 void rickroll();
 
+//int array to store the order of the notes used in the song allstar
 code int SmashMouth[] = {G5, D6, B5, B5, A5, G5, G5, C6, B5, B5, A5, A5, G5, 0, G5, D6, B5, B5, A5, A5, G5, G5, E5, D5, 0};
-
+//int array to store the duration of the notes played in the song allstar
 code int durSmashMouth[] = {64, 32, 32, 64, 32, 32, 32, 64, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 64, 64, 32};
-
+// int array to store the order of the notes used in the song never gonna give you up
 code int GiveYouUp[] = {G5, A5, C6, A5, E6, E6, D6, G5, A5, B5, G5, 
-											D6, D6, C6, B5, A5, G5, A5, B5, G5, C6, D6, B5,
-											A5, G5, 0, G5, D6, C6, 0};
-
+			D6, D6, C6, B5, A5, G5, A5, B5, G5, C6, D6, B5,
+			A5, G5, 0, G5, D6, C6, 0};
+// int array to store the duration of the notese played in the song allstar
 code int durGiveYouUp[] = {16, 16, 16, 16, 32, 32, 64, 16, 16, 16, 16, 32, 32, 32, 16, 32, 16, 16, 16, 16, 64, 32, 48, 16, 32, 32, 32, 64, 64, 32};
 
 char trans;
