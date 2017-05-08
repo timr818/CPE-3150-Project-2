@@ -1,0 +1,24 @@
+C51 COMPILER V9.54   SONG                                                                  05/07/2017 22:59:10 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE SONG
+OBJECT MODULE PLACED IN .\Objects\song.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE song.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\song
+                    -.lst) TABS(2) OBJECT(.\Objects\song.obj)
+
+line level    source
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

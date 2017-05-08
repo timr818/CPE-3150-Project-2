@@ -1,3 +1,4 @@
-".\Objects\proj.obj" 
+".\Objects\proj.obj",
+".\Objects\song.obj" 
 TO ".\Objects\thing" 
 PRINT(".\Listings\thing.m51")
