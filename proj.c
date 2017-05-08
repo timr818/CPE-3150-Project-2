@@ -1,5 +1,4 @@
 #include <reg932.h>
-#include <uart.h>
 
 #define OSC_FREQ		7372800
 
@@ -70,20 +69,20 @@ void uart_init (void);
 void uart_isr(void);
 void uart_transmit(char c);
 void sqr_wave();
-void playsoung(unsigned char start, unsigned char end);
+void playsong(unsigned char start, unsigned char end);
 void notebread(char letter);
 void breadoff();
 
 code int notes[] = {
 					G5, D6, B5, B5, A5, G5, G5, C6, B5, B5, A5, A5, G5, 0, G5, D6, B5, B5, A5, A5, G5, G5, E5, D5, 0, //smash 0-24
 					G5, A5, C6, A5, E6, E6, D6, G5, A5, B5, G5, D6, D6, C6, B5, A5, G5, A5, B5, G5, C6, D6, B5, A5, G5, 0, G5, D6, C6, 0, //rickroll 25-54
-					A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, D6, D6, D6, D6, D6, D6, D6, C7, C7, C7, C7, C7, C7, C7, G5, G5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, D6, D6, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5
-					}; //55-108
+					A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, D6, 0, D6, 0, D6, 0, D6, 0, D6, 0, D6, 0, D6, 0, C7, 0, C7, 0, C7, 0, C7, 0, C7, 0, C7, 0, C7, 0, G5, 0, G5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, D6, 0, D6, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0
+					}; //55-162
 					
-code int duratoin[] = {
+code int duration[] = {
 				64, 32, 32, 64, 32, 32, 32, 64, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 64, 64, 32,
 				16, 16, 16, 16, 32, 32, 64, 16, 16, 16, 16, 32, 32, 32, 16, 32, 16, 16, 16, 16, 64, 32, 48, 16, 32, 32, 32, 64, 64, 32,
-				8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8,8, 8, 8, 24, 8,8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 24, 8, 8,8, 8, 8, 8, 24,8, 8, 8, 8, 8, 8, 24, 8, 8, 8,8, 8, 8, 24
+				8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 32
 				};
 						
 code char SmashNote[] = {'G', 'D', 'B', 'B', 'B', 'A', 'G', 'G', 'C', 'B', 'B', 'A', 'A', 'G', '#', 'G', 'D', 'B', 'B', 'A', 'A', 'G', 'G', 'E', 'D', '#'};
@@ -188,7 +187,7 @@ void main(void) {
 					uart_transmit(lyric);
 				 	index2++;
 				}
-				playsoug(0, 24);
+				playsong(0, 24);
 				delay(buttonDelay);
 			} else if (mode == 2) {
 				uart_transmit('R');
@@ -210,7 +209,7 @@ void main(void) {
 					uart_transmit(lyric);
 				 	index2++;
 				}
-				playsoug(25, 54);
+				playsong(25, 54);
 				delay(buttonDelay);
 			} else if (mode == 3) {
 				light2=1;
@@ -227,7 +226,8 @@ void main(void) {
 				uart_transmit('U');
 				uart_transmit('D');
 				uart_transmit('E');
-				playsong(55, 108);
+				playsong(55, 162);
+				delay(buttonDelay);
 			}
 		}
 	}
@@ -357,7 +357,7 @@ void uart_transmit(char c) {
   SBUF = c;
 }
 
-void playsoung(unsigned char start, unsigned char end) {
+void playsong(unsigned char start, unsigned char end) {
 	
 	for(index = start; index <= end; index++) {
 		//display which mode you are in

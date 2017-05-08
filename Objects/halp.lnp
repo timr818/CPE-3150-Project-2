@@ -1,0 +1,3 @@
+".\Objects\proj.obj" 
+TO ".\Objects\halp" 
+PRINT(".\Listings\halp.m51")

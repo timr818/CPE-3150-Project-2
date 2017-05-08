@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   PROJ                                                                  05/07/2017 22:59:10 PAGE 1   
+C51 COMPILER V9.54   PROJ                                                                  05/08/2017 00:07:18 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE PROJ
@@ -9,609 +9,494 @@ COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE proj.c OPTIMIZE(8,SPEED) BROWSE 
 line level    source
 
    1          #include <reg932.h>
-   2          #include <uart.h>
-   3          
-   4          #define OSC_FREQ    7372800
-   5          
-   6          #define C4        ((OSC_FREQ/4)/261.63)
-   7          #define D4        ((OSC_FREQ/4)/293.67)
-   8          #define E4        ((OSC_FREQ/4)/329.63)
-   9          #define F4        ((OSC_FREQ/4)/349.23)
-  10          #define G4        ((OSC_FREQ/4)/392.00)
-  11          #define A4        ((OSC_FREQ/4)/440.00) 
-  12          #define B4        ((OSC_FREQ/4)/493.88) 
-  13          #define C5        ((OSC_FREQ/4)/523.25) 
-  14          #define D5        ((OSC_FREQ/4)/587.33)
-  15          #define E5        ((OSC_FREQ/4)/659.26) 
-  16          #define F5        ((OSC_FREQ/4)/698.46) 
-  17          #define G5        ((OSC_FREQ/4)/783.99) 
-  18          #define A5        ((OSC_FREQ/4)/880.00) 
-  19          #define B5        ((OSC_FREQ/4)/987.77) 
-  20          #define C6        ((OSC_FREQ/4)/1046.5) 
-  21          #define D6        ((OSC_FREQ/4)/1174.7) 
-  22          #define E6        ((OSC_FREQ/4)/1318.5) 
-  23          #define F6        ((OSC_FREQ/4)/1396.9) 
-  24          #define G6        ((OSC_FREQ/4)/1568.0) 
-  25          #define A6        ((OSC_FREQ/4)/1760.0) 
-  26          #define B6        ((OSC_FREQ/4)/1975.5) 
-  27          #define C7        ((OSC_FREQ/4)/2093.0) 
-  28          
-  29          sbit light1 = P2^4;
-  30          sbit light2 = P0^5;
-  31          sbit light3 = P2^7;
-  32          sbit light4 = P0^6;
-  33          sbit light5 = P1^6;
-  34          sbit light6 = P0^4;
-  35          sbit light7 = P2^5;
-  36          sbit light8 = P0^7;
-  37          sbit light9 = P2^6;
-  38          
-  39          sbit button1 = P2^0;
-  40          sbit button2 = P0^1;
-  41          sbit button3 = P2^3;
-  42          sbit button4 = P0^2;
-  43          sbit button5 = P1^4;
-  44          sbit button6 = P0^0;
-  45          sbit button7 = P2^1;
-  46          sbit button8 = P0^3;
-  47          sbit button9 = P2^2;
-  48          
-  49          sbit bread1 = P0^6;
-  50          sbit bread2 = P1^6;
-  51          sbit bread3 = P0^4;
-  52          
-  53          sbit speaker = P1^7;
-  54          
-C51 COMPILER V9.54   PROJ                                                                  05/07/2017 22:59:10 PAGE 2   
+   2          
+   3          #define OSC_FREQ    7372800
+   4          
+   5          #define C4        ((OSC_FREQ/4)/261.63)
+   6          #define D4        ((OSC_FREQ/4)/293.67)
+   7          #define E4        ((OSC_FREQ/4)/329.63)
+   8          #define F4        ((OSC_FREQ/4)/349.23)
+   9          #define G4        ((OSC_FREQ/4)/392.00)
+  10          #define A4        ((OSC_FREQ/4)/440.00) 
+  11          #define B4        ((OSC_FREQ/4)/493.88) 
+  12          #define C5        ((OSC_FREQ/4)/523.25) 
+  13          #define D5        ((OSC_FREQ/4)/587.33)
+  14          #define E5        ((OSC_FREQ/4)/659.26) 
+  15          #define F5        ((OSC_FREQ/4)/698.46) 
+  16          #define G5        ((OSC_FREQ/4)/783.99) 
+  17          #define A5        ((OSC_FREQ/4)/880.00) 
+  18          #define B5        ((OSC_FREQ/4)/987.77) 
+  19          #define C6        ((OSC_FREQ/4)/1046.5) 
+  20          #define D6        ((OSC_FREQ/4)/1174.7) 
+  21          #define E6        ((OSC_FREQ/4)/1318.5) 
+  22          #define F6        ((OSC_FREQ/4)/1396.9) 
+  23          #define G6        ((OSC_FREQ/4)/1568.0) 
+  24          #define A6        ((OSC_FREQ/4)/1760.0) 
+  25          #define B6        ((OSC_FREQ/4)/1975.5) 
+  26          #define C7        ((OSC_FREQ/4)/2093.0) 
+  27          
+  28          sbit light1 = P2^4;
+  29          sbit light2 = P0^5;
+  30          sbit light3 = P2^7;
+  31          sbit light4 = P0^6;
+  32          sbit light5 = P1^6;
+  33          sbit light6 = P0^4;
+  34          sbit light7 = P2^5;
+  35          sbit light8 = P0^7;
+  36          sbit light9 = P2^6;
+  37          
+  38          sbit button1 = P2^0;
+  39          sbit button2 = P0^1;
+  40          sbit button3 = P2^3;
+  41          sbit button4 = P0^2;
+  42          sbit button5 = P1^4;
+  43          sbit button6 = P0^0;
+  44          sbit button7 = P2^1;
+  45          sbit button8 = P0^3;
+  46          sbit button9 = P2^2;
+  47          
+  48          sbit bread1 = P0^6;
+  49          sbit bread2 = P1^6;
+  50          sbit bread3 = P0^4;
+  51          
+  52          sbit speaker = P1^7;
+  53          
+  54          static bit mtxbusy;
+C51 COMPILER V9.54   PROJ                                                                  05/08/2017 00:07:18 PAGE 2   
 
-  55          static bit mtxbusy;
-  56          
-  57          unsigned char mode;
-  58          unsigned int buttonDelay;
-  59          
-  60          unsigned int tempo;
-  61          unsigned int freq;
-  62          unsigned int dur;
-  63          unsigned char lyric; //holds the lyrics to output, one char at a time
-  64          unsigned char index;
-  65          unsigned char index2;
-  66          
-  67          void delay(unsigned int time);
-  68          void playsound(unsigned int dur, unsigned int del);
-  69          void piano(void);
-  70          void uart_init (void);
-  71          void uart_isr(void);
-  72          void uart_transmit(char c);
-  73          void sqr_wave();
-  74          void allstar();
-  75          void rickroll();
-  76          void sandstorm();
-  77          void notebread(char letter);
-  78          void breadoff();
-  79          
-  80          code int SmashMouth[] = {G5, D6, B5, B5, A5, G5, G5, C6, B5, B5, A5, A5, G5, 0, G5, D6, B5, B5, A5, A5, G5
-             -, G5, E5, D5, 0};
-  81            
-  82          code char SmashNote[] = {'G', 'D', 'B', 'B', 'B', 'A', 'G', 'G', 'C', 'B', 'B', 'A', 'A', 'G', '#', 'G', '
+  55          
+  56          unsigned char mode;
+  57          unsigned int buttonDelay;
+  58          
+  59          unsigned int tempo;
+  60          unsigned int freq;
+  61          unsigned int dur;
+  62          unsigned char lyric; //holds the lyrics to output, one char at a time
+  63          unsigned char index;
+  64          unsigned char index2;
+  65          
+  66          void delay(unsigned int time);
+  67          void piano(void);
+  68          void uart_init (void);
+  69          void uart_isr(void);
+  70          void uart_transmit(char c);
+  71          void sqr_wave();
+  72          void playsong(unsigned char start, unsigned char end);
+  73          void notebread(char letter);
+  74          void breadoff();
+  75          
+  76          code int notes[] = {
+  77                    G5, D6, B5, B5, A5, G5, G5, C6, B5, B5, A5, A5, G5, 0, G5, D6, B5, B5, A5, A5, G5, G5, E5, D5, 0, //s
+             -mash 0-24
+  78                    G5, A5, C6, A5, E6, E6, D6, G5, A5, B5, G5, D6, D6, C6, B5, A5, G5, A5, B5, G5, C6, D6, B5, A5, G5, 0
+             -, G5, D6, C6, 0, //rickroll 25-54
+  79                    A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, D6, 0, D6, 0, D6,
+             - 0, D6, 0, D6, 0, D6, 0, D6, 0, C7, 0, C7, 0, C7, 0, C7, 0, C7, 0, C7, 0, C7, 0, G5, 0, G5, 0, A5, 0, A5, 0, A5, 0, A5, 
+             -0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, D6, 0, D6, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0
+             -, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0
+  80                    }; //55-162
+  81                    
+  82          code int duration[] = {
+  83                  64, 32, 32, 64, 32, 32, 32, 64, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 64, 64, 32,
+  84                  16, 16, 16, 16, 32, 32, 64, 16, 16, 16, 16, 32, 32, 32, 16, 32, 16, 16, 16, 16, 64, 32, 48, 16, 32, 32
+             -, 32, 64, 64, 32,
+  85                  8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8
+             -, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8
+             -, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 32
+  86                  };
+  87                      
+  88          code char SmashNote[] = {'G', 'D', 'B', 'B', 'B', 'A', 'G', 'G', 'C', 'B', 'B', 'A', 'A', 'G', '#', 'G', '
              -D', 'B', 'B', 'A', 'A', 'G', 'G', 'E', 'D', '#'};
-  83          
-  84          code int durSmashMouth[] = {64, 32, 32, 64, 32, 32, 32, 64, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32
-             -, 32, 32, 64, 64, 32};
-  85            
-  86          code char lyrSmashMouth[] = "Somebody once told me the world is gonna owe me, I ain't the sharpest tool in
+  89          
+  90          code char RRNote[] = {'G', 'A', 'C', 'A', 'E', 'E', 'D', 'G', 'A', 'B', 'G', 'D', 'D', 'C', 'B', 'A', 'G',
+             - 'A', 'B','G', 'C', 'D', 'B','A', 'G', '#', 'G', 'D', 'C', '#'};
+  91            
+  92            
+  93          code char lyrSmashMouth[] = "Somebody once told me the world is gonna owe me, I ain't the sharpest tool in
              - the shed.#";
-  87          
-  88          code int GiveYouUp[] = {G5, A5, C6, A5, E6, E6, D6, G5, A5, B5, G5, 
-  89                                D6, D6, C6, B5, A5, G5, A5, B5, G5, C6, D6, B5,
-  90                                A5, G5, 0, G5, D6, C6, 0};
-  91          
-  92          code char GiveYouNote[] = {'G', 'A', 'C', 'A', 'E', 'E', 'D', 'G', 'A', 'B', 'G', 
-  93                                'D', 'D', 'C', 'B', 'A', 'G', 'A', 'B','G', 'C', 'D', 'B',
-  94                                'A', 'G', '#', 'G', 'D', 'C', 0};
-  95          
-  96          code char lyrGiveYouUp[] = { "Never gonna give you up, never gonna let you down. Never gonna run around an
+  94          
+  95          code char lyrGiveYouUp[] = { "Never gonna give you up, never gonna let you down. Never gonna run around an
              -d, desert you.#" };
-  97          
-  98          code int durGiveYouUp[] = {16, 16, 16, 16, 32, 32, 64, 16, 16, 16, 16, 32, 32, 32, 16, 32, 16, 16, 16, 16,
-             - 64, 32, 48, 16, 32, 32, 32, 64, 64, 32};
-  99            
- 100          code int Darude[] = { A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, D6, D6, D6, D6, D6, D6, D6, C7, C7, 
-             -C7, C7, C7, C7, C7, G5, G5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, D6, D6, A5, A5, A5, A5, A5, A5, A5, A5, A5, 
-             -A5, A5, A5}; //54
- 101            
- 102          code int durDarude[] = {8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8,8, 8, 8, 24, 8,8, 8, 8, 8, 8, 24, 8,
-             - 8, 8, 8, 8, 8, 24, 8, 8,8, 8, 8, 8, 24,8, 8, 8, 8, 8, 8, 24, 8, 8, 8,8, 8, 8, 24};
- 103          
- 104          char trans;
- 105          
- 106          void main(void) {
- 107   1        mode = 1;
-C51 COMPILER V9.54   PROJ                                                                  05/07/2017 22:59:10 PAGE 3   
+  96          
+  97          void main(void) {
+  98   1        mode = 1;
+  99   1        buttonDelay = 15000;
+ 100   1        
+ 101   1        tempo = 500;
+ 102   1        
+ 103   1        TMOD = 0x21;
+ 104   1        EA = 1;
+C51 COMPILER V9.54   PROJ                                                                  05/08/2017 00:07:18 PAGE 3   
 
- 108   1        buttonDelay = 15000;
- 109   1        
- 110   1        tempo = 500;
+ 105   1        ET0 = 1;
+ 106   1        
+ 107   1        //initialize the ports so buttons and lights work
+ 108   1        P2M1=0;
+ 109   1        P1M1=0x2F&P1M1;
+ 110   1        P0M1=0;
  111   1        
- 112   1        TMOD = 0x21;
- 113   1        EA = 1;
- 114   1        ET0 = 1;
- 115   1        
- 116   1        //initialize the ports so buttons and lights work
- 117   1        P2M1=0;
- 118   1        P1M1=0x2F&P1M1;
- 119   1        P0M1=0;
- 120   1        
- 121   1        trans = 65;
- 122   1        uart_init(); //initialize serial stuff
- 123   1        
- 124   1        while(1) { //do FOREVER!!! MUWAHAHAHA
- 125   2          light8=0;
- 126   2          
- 127   2          //mode 1 = Smashmouth
- 128   2          //mode 2 = rickroll
- 129   2          //mode 3 = Piano
- 130   2          
- 131   2          
- 132   2          //display which mode you are in
- 133   2          if (mode == 1) {
- 134   3            light1 = 1;
- 135   3            light3 = 0;
- 136   3            light2 = 1;
- 137   3          } else if (mode == 2) {
- 138   3            light1 = 1;
- 139   3            light2 = 0;
- 140   3            light3 = 1;
- 141   3          } else if (mode == 3) {
- 142   3            light1 = 1;
- 143   3            light2 = 0;
- 144   3            light3 = 0;
- 145   3          } else if (mode == 4) {
- 146   3            light1 = 0;
- 147   3            light2 = 1;
- 148   3            light3 = 1;
- 149   3          }
- 150   2          
- 151   2          //increment button.
- 152   2          if (!button9) {
- 153   3            light9 = 0;
- 154   3            if (mode >= 4) {
- 155   4              mode = 0;
- 156   4              delay(buttonDelay);
- 157   4            } else {
- 158   4              mode++;
+ 112   1        uart_init(); //initialize serial stuff
+ 113   1        
+ 114   1        while(1) { //do FOREVER!!! MUWAHAHAHA
+ 115   2          light8=0;
+ 116   2          
+ 117   2          //mode 1 = Smashmouth
+ 118   2          //mode 2 = rickroll
+ 119   2          //mode 3 = Piano
+ 120   2          
+ 121   2          
+ 122   2          //display which mode you are in
+ 123   2          if (mode == 1) {
+ 124   3            light1 = 1;
+ 125   3            light3 = 0;
+ 126   3            light2 = 1;
+ 127   3          } else if (mode == 2) {
+ 128   3            light1 = 1;
+ 129   3            light2 = 0;
+ 130   3            light3 = 1;
+ 131   3          } else if (mode == 3) {
+ 132   3            light1 = 1;
+ 133   3            light2 = 0;
+ 134   3            light3 = 0;
+ 135   3          } else if (mode == 4) {
+ 136   3            light1 = 0;
+ 137   3            light2 = 1;
+ 138   3            light3 = 1;
+ 139   3          }
+ 140   2          
+ 141   2          //increment button.
+ 142   2          if (!button9) {
+ 143   3            light9 = 0;
+ 144   3            if (mode >= 4) {
+ 145   4              mode = 0;
+ 146   4              delay(buttonDelay);
+ 147   4            } else {
+ 148   4              mode++;
+ 149   4              delay(buttonDelay);
+ 150   4            }
+ 151   3            light9 = 1;
+ 152   3          }
+ 153   2          
+ 154   2          //decrement button
+ 155   2          if (!button7) {
+ 156   3            light7 = 0;
+ 157   3            if (mode <= 1) {
+ 158   4              mode = 3;
  159   4              delay(buttonDelay);
- 160   4            }
- 161   3            light9 = 1;
- 162   3          }
- 163   2          
- 164   2          //decrement button
- 165   2          if (!button7) {
- 166   3            light7 = 0;
- 167   3            if (mode <= 1) {
- 168   4              mode = 3;
- 169   4              delay(buttonDelay);
-C51 COMPILER V9.54   PROJ                                                                  05/07/2017 22:59:10 PAGE 4   
+ 160   4            } else {
+ 161   4              mode--;
+ 162   4              delay(buttonDelay);
+ 163   4            }
+ 164   3            light7 = 1;
+ 165   3          }
+ 166   2          
+C51 COMPILER V9.54   PROJ                                                                  05/08/2017 00:07:18 PAGE 4   
 
- 170   4            } else {
- 171   4              mode--;
- 172   4              delay(buttonDelay);
- 173   4            }
- 174   3            light7 = 1;
- 175   3          }
- 176   2          
- 177   2          //selection mode
- 178   2          if (!button8) { //mode is selected
- 179   3            if (mode == 1) {
- 180   4              uart_transmit('S');
- 181   4              uart_transmit('M');
- 182   4              uart_transmit('A');
- 183   4              uart_transmit('S');
- 184   4              uart_transmit('H');
- 185   4              uart_transmit(' ');
- 186   4              uart_transmit('M');
- 187   4              uart_transmit('O');
- 188   4              uart_transmit('U');
- 189   4              uart_transmit('T');
- 190   4              uart_transmit('H');
- 191   4              uart_transmit(' ');
- 192   4              
- 193   4              allstar();
- 194   4              delay(buttonDelay);
- 195   4            } else if (mode == 2) {
- 196   4              uart_transmit('R');
- 197   4              uart_transmit('I');
- 198   4              uart_transmit('C');
- 199   4              uart_transmit('K');
- 200   4              uart_transmit(' ');
- 201   4              uart_transmit('R');
- 202   4              uart_transmit('O');
- 203   4              uart_transmit('L');
- 204   4              uart_transmit('L');
- 205   4              uart_transmit(' ');
- 206   4              
- 207   4              rickroll();
- 208   4              delay(buttonDelay);
- 209   4            } else if (mode == 3) {
- 210   4              light2=1;
- 211   4              light3=1;
- 212   4              light8=1;
+ 167   2          //selection mode
+ 168   2          if (!button8) { //mode is selected
+ 169   3            if (mode == 1) {
+ 170   4              uart_transmit('S');
+ 171   4              uart_transmit('M');
+ 172   4              uart_transmit('A');
+ 173   4              uart_transmit('S');
+ 174   4              uart_transmit('H');
+ 175   4              uart_transmit(' ');
+ 176   4              uart_transmit('M');
+ 177   4              uart_transmit('O');
+ 178   4              uart_transmit('U');
+ 179   4              uart_transmit('T');
+ 180   4              uart_transmit('H');
+ 181   4              uart_transmit(' ');
+ 182   4              
+ 183   4              index2 = 0;
+ 184   4              lyric = ' ';
+ 185   4              while(lyric != '#') {
+ 186   5                lyric = lyrSmashMouth[index2];
+ 187   5                uart_transmit(lyric);
+ 188   5                index2++;
+ 189   5              }
+ 190   4              playsong(0, 24);
+ 191   4              delay(buttonDelay);
+ 192   4            } else if (mode == 2) {
+ 193   4              uart_transmit('R');
+ 194   4              uart_transmit('I');
+ 195   4              uart_transmit('C');
+ 196   4              uart_transmit('K');
+ 197   4              uart_transmit(' ');
+ 198   4              uart_transmit('R');
+ 199   4              uart_transmit('O');
+ 200   4              uart_transmit('L');
+ 201   4              uart_transmit('L');
+ 202   4              uart_transmit(' ');
+ 203   4              
+ 204   4              
+ 205   4              index2 = 0;
+ 206   4              lyric = ' ';
+ 207   4              while(lyric != '#') {
+ 208   5                lyric = lyrGiveYouUp[index2];
+ 209   5                uart_transmit(lyric);
+ 210   5                index2++;
+ 211   5              }
+ 212   4              playsong(25, 54);
  213   4              delay(buttonDelay);
- 214   4              piano();
- 215   4            } else if (mode == 4) {
- 216   4              light1 = 1;
- 217   4              light8 = 1;
- 218   4              uart_transmit('D');
- 219   4              uart_transmit('A');
- 220   4              uart_transmit('R');
- 221   4              uart_transmit('U');
- 222   4              uart_transmit('D');
- 223   4              uart_transmit('E');
- 224   4              sandstorm();
- 225   4            }
- 226   3          }
- 227   2        }
- 228   1      }
- 229          
- 230          
- 231          void piano(void) {
-C51 COMPILER V9.54   PROJ                                                                  05/07/2017 22:59:10 PAGE 5   
+ 214   4            } else if (mode == 3) {
+ 215   4              light2=1;
+ 216   4              light3=1;
+ 217   4              light8=1;
+ 218   4              delay(buttonDelay);
+ 219   4              piano();
+ 220   4            } else if (mode == 4) {
+ 221   4              light1 = 1;
+ 222   4              light8 = 1;
+ 223   4              uart_transmit('D');
+ 224   4              uart_transmit('A');
+ 225   4              uart_transmit('R');
+ 226   4              uart_transmit('U');
+ 227   4              uart_transmit('D');
+ 228   4              uart_transmit('E');
+C51 COMPILER V9.54   PROJ                                                                  05/08/2017 00:07:18 PAGE 5   
 
- 232   1        unsigned char play = 1; //boolean for quiting the piano mode
- 233   1        light4 = 0; light5 = 0; light6 = 0; //turn on piano key lights
- 234   1        while(play) {
- 235   2          if (button4 && button5 && button6) {
- 236   3            TR0 = 0;
- 237   3            light4=0;
- 238   3            light5=0;
- 239   3            light6=0;
- 240   3          }
- 241   2          //first key
- 242   2          if (!button4) {
- 243   3            freq = G4;
- 244   3            dur = 5;
- 245   3            TR0 = 1;
- 246   3            light4=1;
- 247   3          }
- 248   2          
- 249   2          //second key
- 250   2          if (!button5) {
- 251   3            freq = G5;
- 252   3            dur = 5;
- 253   3            TR0 = 1;
- 254   3            light5=1;
- 255   3          }
- 256   2          
- 257   2          //third key
- 258   2          if (!button6) {
- 259   3            freq = G6;
- 260   3            dur = 5;
- 261   3            TR0 = 1;
- 262   3            light6=1;
- 263   3          }
- 264   2          
- 265   2          //exit button
- 266   2          if (!button8) {
- 267   3            light4 = 1; light5 = 1; light6 = 1;
- 268   3            delay(buttonDelay);
- 269   3            play = 0;
- 270   3          }
- 271   2        }
- 272   1      }
- 273          
- 274          //delay for a time
- 275          void delay (unsigned int time) {
- 276   1        unsigned int i, j;
- 277   1        for (i=0; i < time; i++) {
- 278   2          for (j=0; j<5;j++) {
- 279   3          }
- 280   2        }
- 281   1      }
- 282          
- 283          void uart_init (void) {
- 284   1        // configure UART
- 285   1        // clear SMOD0
- 286   1        PCON &= ~0x40;
- 287   1        SCON = 0x50;
- 288   1        // set or clear SMOD1
- 289   1        PCON &= 0x7F;
- 290   1        PCON |= (0 << 8);
- 291   1        SSTAT = 0x00;
- 292   1      
- 293   1        // enable break detect
-C51 COMPILER V9.54   PROJ                                                                  05/07/2017 22:59:10 PAGE 6   
+ 229   4              playsong(55, 162);
+ 230   4              delay(buttonDelay);
+ 231   4            }
+ 232   3          }
+ 233   2        }
+ 234   1      }
+ 235          
+ 236          
+ 237          void piano(void) {
+ 238   1        unsigned char play = 1; //boolean for quiting the piano mode
+ 239   1        light4 = 0; light5 = 0; light6 = 0; //turn on piano key lights
+ 240   1        while(play) {
+ 241   2          if (button4 && button5 && button6) {
+ 242   3            TR0 = 0;
+ 243   3            light4=0;
+ 244   3            light5=0;
+ 245   3            light6=0;
+ 246   3          }
+ 247   2          //first key
+ 248   2          if (!button4) {
+ 249   3            freq = G4;
+ 250   3            dur = 5;
+ 251   3            TR0 = 1;
+ 252   3            light4=1;
+ 253   3          }
+ 254   2          
+ 255   2          //second key
+ 256   2          if (!button5) {
+ 257   3            freq = G5;
+ 258   3            dur = 5;
+ 259   3            TR0 = 1;
+ 260   3            light5=1;
+ 261   3          }
+ 262   2          
+ 263   2          //third key
+ 264   2          if (!button6) {
+ 265   3            freq = G6;
+ 266   3            dur = 5;
+ 267   3            TR0 = 1;
+ 268   3            light6=1;
+ 269   3          }
+ 270   2          
+ 271   2          //exit button
+ 272   2          if (!button8) {
+ 273   3            light4 = 1; light5 = 1; light6 = 1;
+ 274   3            delay(buttonDelay);
+ 275   3            play = 0;
+ 276   3          }
+ 277   2        }
+ 278   1      }
+ 279          
+ 280          //delay for a time
+ 281          void delay (unsigned int time) {
+ 282   1        unsigned int i, j;
+ 283   1        for (i=0; i < time; i++) {
+ 284   2          for (j=0; j<5;j++) {
+ 285   3          }
+ 286   2        }
+ 287   1      }
+ 288          
+ 289          void uart_init (void) {
+ 290   1        // configure UART
+C51 COMPILER V9.54   PROJ                                                                  05/08/2017 00:07:18 PAGE 6   
 
- 294   1        AUXR1 |= 0x40;
- 295   1      
- 296   1        // configure baud rate generator
- 297   1        
- 298   1        BRGCON = 0x00;
- 299   1        BRGR0 = 0xF0;
- 300   1        BRGR1 = 0x02;
- 301   1        BRGCON = 0x03;
- 302   1        /**/
- 303   1        /*
- 304   1        EA = 1;
- 305   1        ET1 = 1;
- 306   1        TMOD = 0x21;
- 307   1        TH1 = -6;
- 308   1        TR1 = 1;
- 309   1        /**/
- 310   1      
- 311   1        // TxD = push-pull, RxD = input
- 312   1        P1M1 = 0x02;
- 313   1        P1M2 = 0x01;
- 314   1      
- 315   1        // initially not busy
- 316   1        mtxbusy = 0;
- 317   1      
- 318   1        // set isr priority to 0
- 319   1        IP0 = 1;
- 320   1        IP0H = 1;
- 321   1        
- 322   1        // enable uart interrupt
- 323   1        ES = 1;
- 324   1        EA = 1;
- 325   1      
- 326   1      
- 327   1      } // uart_init
- 328          
- 329          
- 330          void uart_isr(void) interrupt 4 using 1 {
- 331   1        if (RI)
- 332   1        {
- 333   2          //do nothing upon receiving stuff
- 334   2          
- 335   2          // clear interrupt flag
- 336   2          RI = 0;
- 337   2        }
- 338   1      
- 339   1        if (TI)
- 340   1        {
+ 291   1        // clear SMOD0
+ 292   1        PCON &= ~0x40;
+ 293   1        SCON = 0x50;
+ 294   1        // set or clear SMOD1
+ 295   1        PCON &= 0x7F;
+ 296   1        PCON |= (0 << 8);
+ 297   1        SSTAT = 0x00;
+ 298   1      
+ 299   1        // enable break detect
+ 300   1        AUXR1 |= 0x40;
+ 301   1      
+ 302   1        // configure baud rate generator
+ 303   1        
+ 304   1        BRGCON = 0x00;
+ 305   1        BRGR0 = 0xF0;
+ 306   1        BRGR1 = 0x02;
+ 307   1        BRGCON = 0x03;
+ 308   1        /**/
+ 309   1        /*
+ 310   1        EA = 1;
+ 311   1        ET1 = 1;
+ 312   1        TMOD = 0x21;
+ 313   1        TH1 = -6;
+ 314   1        TR1 = 1;
+ 315   1        /**/
+ 316   1      
+ 317   1        // TxD = push-pull, RxD = input
+ 318   1        P1M1 = 0x02;
+ 319   1        P1M2 = 0x01;
+ 320   1      
+ 321   1        // initially not busy
+ 322   1        mtxbusy = 0;
+ 323   1      
+ 324   1        // set isr priority to 0
+ 325   1        IP0 = 1;
+ 326   1        IP0H = 1;
+ 327   1        
+ 328   1        // enable uart interrupt
+ 329   1        ES = 1;
+ 330   1        EA = 1;
+ 331   1      
+ 332   1      
+ 333   1      } // uart_init
+ 334          
+ 335          
+ 336          void uart_isr(void) interrupt 4 using 1 {
+ 337   1        if (RI)
+ 338   1        {
+ 339   2          //do nothing upon receiving stuff
+ 340   2          
  341   2          // clear interrupt flag
- 342   2          TI = 0;
- 343   2          // no longer busy
- 344   2          mtxbusy = 0;
- 345   2        }
- 346   1      }
- 347          
- 348          void uart_transmit(char c) {
- 349   1        while(mtxbusy);
- 350   1        mtxbusy = 1;
- 351   1        SBUF = c;
+ 342   2          RI = 0;
+ 343   2        }
+ 344   1      
+ 345   1        if (TI)
+ 346   1        {
+ 347   2          // clear interrupt flag
+ 348   2          TI = 0;
+ 349   2          // no longer busy
+ 350   2          mtxbusy = 0;
+ 351   2        }
  352   1      }
+C51 COMPILER V9.54   PROJ                                                                  05/08/2017 00:07:18 PAGE 7   
+
  353          
- 354          void allstar() {
- 355   1      
-C51 COMPILER V9.54   PROJ                                                                  05/07/2017 22:59:10 PAGE 7   
+ 354          void uart_transmit(char c) {
+ 355   1        while(mtxbusy);
+ 356   1        mtxbusy = 1;
+ 357   1        SBUF = c;
+ 358   1      }
+ 359          
+ 360          void playsong(unsigned char start, unsigned char end) {
+ 361   1        
+ 362   1        for(index = start; index <= end; index++) {
+ 363   2          //display which mode you are in
+ 364   2          if (mode == 1) {
+ 365   3            light3 = 0;
+ 366   3            light2 = 1;
+ 367   3          } else if (mode == 2) {
+ 368   3            light2 = 0;
+ 369   3            light3 = 1;
+ 370   3          } else if (mode == 3) {
+ 371   3            light2 = 0;
+ 372   3            light3 = 0;
+ 373   3          }
+ 374   2          
+ 375   2          //increment button.
+ 376   2          if (!button9) {
+ 377   3            light9 = 0;
+ 378   3            if (mode >= 3) {
+ 379   4              mode = 0;
+ 380   4            } else {
+ 381   4              mode++;
+ 382   4            }
+ 383   3            light9 = 1;
+ 384   3          }
+ 385   2          
+ 386   2          //decrement button
+ 387   2          if (!button7) {
+ 388   3            light7 = 0;
+ 389   3            if (mode <= 1) {
+ 390   4              mode = 3;
+ 391   4            } else {
+ 392   4              mode--;
+ 393   4            }
+ 394   3            light7 = 1;
+ 395   3          } 
+ 396   2          
+ 397   2          delay(200);
+ 398   2          if (notes[index] != 0) {
+ 399   3            freq = notes[index];
+ 400   3            dur = duration[index] * tempo;
+ 401   3            
+ 402   3            if (mode == 1) {
+ 403   4              notebread(SmashNote[index]);
+ 404   4            } else if (mode == 2) {
+ 405   4              notebread(RRNote[index]);
+ 406   4            }
+ 407   3              
+ 408   3            
+ 409   3            TR0 = 1;
+ 410   3            delay(dur);
+ 411   3            breadoff();
+ 412   3          } else if (notes[index] == 0) {
+ 413   3            TR0 = 0;
+ 414   3            dur = duration[index];
+C51 COMPILER V9.54   PROJ                                                                  05/08/2017 00:07:18 PAGE 8   
 
- 356   1        index2 = 0;
- 357   1        lyric = ' ';
- 358   1        while(lyric != '#') {
- 359   2          lyric = lyrSmashMouth[index2];
- 360   2          uart_transmit(lyric);
- 361   2          index2++;
- 362   2        }
- 363   1        
- 364   1        for(index = 0; index < 25; index++) {
- 365   2          //display which mode you are in
- 366   2          if (mode == 1) {
- 367   3            light3 = 0;
- 368   3            light2 = 1;
- 369   3          } else if (mode == 2) {
- 370   3            light2 = 0;
- 371   3            light3 = 1;
- 372   3          } else if (mode == 3) {
- 373   3            light2 = 0;
- 374   3            light3 = 0;
- 375   3          }
- 376   2          
- 377   2          //increment button.
- 378   2          if (!button9) {
- 379   3            light9 = 0;
- 380   3            if (mode >= 3) {
- 381   4              mode = 0;
- 382   4            } else {
- 383   4              mode++;
- 384   4            }
- 385   3            light9 = 1;
- 386   3          }
- 387   2          
- 388   2          //decrement button
- 389   2          if (!button7) {
- 390   3            light7 = 0;
- 391   3            if (mode <= 1) {
- 392   4              mode = 3;
- 393   4            } else {
- 394   4              mode--;
- 395   4            }
- 396   3            light7 = 1;
- 397   3          } 
- 398   2          
- 399   2          delay(200);
- 400   2          if (SmashMouth[index] != 0) {
- 401   3            freq = SmashMouth[index];
- 402   3            dur = durSmashMouth[index] * tempo;
- 403   3            
- 404   3            notebread(SmashNote[index]);
- 405   3            
- 406   3            TR0 = 1;
- 407   3            delay(dur);
- 408   3            breadoff();
- 409   3          } else if (SmashMouth[index] == 0) {
- 410   3            TR0 = 0;
- 411   3            dur = durSmashMouth[index];
- 412   3            delay(dur * 400);
- 413   3          } else {
- 414   3            TR0 = 0;
- 415   3          }
- 416   2        }
- 417   1      }
-C51 COMPILER V9.54   PROJ                                                                  05/07/2017 22:59:10 PAGE 8   
-
- 418          
- 419          void breadoff() {
- 420   1        bread1 = 1; bread2 = 1; bread3 = 1;
- 421   1      }
- 422          
- 423          void notebread(char letter) {
- 424   1        
- 425   1        if (letter == 'A') {
- 426   2          bread1 = 1; bread2 = 1; bread3 = 0;
- 427   2        }
- 428   1        if (letter == 'B') {
- 429   2          bread1 = 1; bread2 = 0; bread3 = 1;
+ 415   3            delay(dur * 400);
+ 416   3          } else {
+ 417   3            TR0 = 0;
+ 418   3          }
+ 419   2        }
+ 420   1      }
+ 421          
+ 422          void breadoff() {
+ 423   1        bread1 = 1; bread2 = 1; bread3 = 1;
+ 424   1      }
+ 425          
+ 426          void notebread(char letter) {
+ 427   1        
+ 428   1        if (letter == 'A') {
+ 429   2          bread1 = 1; bread2 = 1; bread3 = 0;
  430   2        }
- 431   1        if (letter == 'C') {
- 432   2          bread1 = 1; bread2 = 0; bread3 = 0;
+ 431   1        if (letter == 'B') {
+ 432   2          bread1 = 1; bread2 = 0; bread3 = 1;
  433   2        }
- 434   1        if (letter == 'D') {
- 435   2          bread1 = 0; bread2 = 1; bread3 = 1;
+ 434   1        if (letter == 'C') {
+ 435   2          bread1 = 1; bread2 = 0; bread3 = 0;
  436   2        }
- 437   1        if (letter == 'E') {
- 438   2          bread1 = 0; bread2 = 1; bread3 = 0;
+ 437   1        if (letter == 'D') {
+ 438   2          bread1 = 0; bread2 = 1; bread3 = 1;
  439   2        }
- 440   1        if (letter == 'F') {
- 441   2          bread1 = 0; bread2 = 0; bread3 = 1;
+ 440   1        if (letter == 'E') {
+ 441   2          bread1 = 0; bread2 = 1; bread3 = 0;
  442   2        }
- 443   1        if (letter == 'G') {
- 444   2          bread1 = 0; bread2 = 0; bread3 = 0;
+ 443   1        if (letter == 'F') {
+ 444   2          bread1 = 0; bread2 = 0; bread3 = 1;
  445   2        }
- 446   1      }
- 447          
- 448          void rickroll() {
- 449   1          
- 450   1        index2 = 0;
- 451   1        lyric = ' ';
- 452   1        while(lyric != '#') {
- 453   2          lyric = lyrGiveYouUp[index2];
- 454   2          uart_transmit(lyric);
- 455   2          index2++;
- 456   2        }
- 457   1        
- 458   1        for(index = 0; index < 30; index++) {   
- 459   2          
- 460   2          //display which mode you are in
- 461   2          if (mode == 1) {
- 462   3            light3 = 0;
- 463   3            light2 = 1;
- 464   3          } else if (mode == 2) {
- 465   3            light2 = 0;
- 466   3            light3 = 1;
- 467   3          } else if (mode == 3) {
- 468   3            light2 = 0;
- 469   3            light3 = 0;
- 470   3          }
- 471   2          
- 472   2          //increment button.
- 473   2          if (!button9) {
- 474   3            light9 = 0;
- 475   3            if (mode >= 3) {
- 476   4              mode = 0;
- 477   4            } else {
- 478   4              mode++;
- 479   4            }
-C51 COMPILER V9.54   PROJ                                                                  05/07/2017 22:59:10 PAGE 9   
-
- 480   3            light9 = 1;
- 481   3          }
- 482   2          
- 483   2          //decrement button
- 484   2          if (!button7) {
- 485   3            light7 = 0;
- 486   3            if (mode <= 1) {
- 487   4              mode = 3;
- 488   4            } else {
- 489   4              mode--;
- 490   4            }
- 491   3            light7 = 1;
- 492   3          }
- 493   2          
- 494   2          delay(200);
- 495   2          if (GiveYouUp[index] != 0) {
- 496   3            notebread(GiveYouNote[index]);
- 497   3            freq = GiveYouUp[index];
- 498   3            dur = durGiveYouUp[index] * tempo;
- 499   3            TR0 = 1;
- 500   3            delay(dur);
- 501   3            breadoff();
- 502   3          } else if (GiveYouUp[index] == 0) {
- 503   3            TR0 = 0;
- 504   3            dur = durGiveYouUp[index];
- 505   3            delay(dur * 400);
- 506   3          } else {
- 507   3            TR0 = 0;
- 508   3          }
- 509   2        }
- 510   1      }
- 511          
- 512          void sandstorm() {
- 513   1        index2 = 0;
- 514   1        lyric = ' ';
- 515   1        
- 516   1        for(index = 0; index < 54; index++) {   
- 517   2          //display which mode you are in
- 518   2          if (mode == 1) {
- 519   3            light3 = 0;
- 520   3            light2 = 1;
- 521   3          } else if (mode == 2) {
- 522   3            light2 = 0;
- 523   3            light3 = 1;
- 524   3          } else if (mode == 3) {
- 525   3            light2 = 0;
- 526   3            light3 = 0;
- 527   3          }
- 528   2          
- 529   2          //increment button.
- 530   2          if (!button9) {
- 531   3            light9 = 0;
- 532   3            if (mode >= 3) {
- 533   4              mode = 0;
- 534   4            } else {
- 535   4              mode++;
- 536   4            }
- 537   3            light9 = 1;
- 538   3          }
- 539   2          
- 540   2          //decrement button
- 541   2          if (!button7) {
-C51 COMPILER V9.54   PROJ                                                                  05/07/2017 22:59:10 PAGE 10  
-
- 542   3            light7 = 0;
- 543   3            if (mode <= 1) {
- 544   4              mode = 3;
- 545   4            } else {
- 546   4              mode--;
- 547   4            }
- 548   3            light7 = 1;
- 549   3          }
- 550   2          
- 551   2          delay(200);
- 552   2          if (Darude[index] != 0) {
- 553   3            freq = Darude[index];
- 554   3            dur = durDarude[index] * tempo;
- 555   3            TR0 = 1;
- 556   3            delay(dur);
- 557   3            // Darudey notes
- 558   3            TR0 = 0;
- 559   3            dur = 8; // add breaks between notes
- 560   3            delay(dur * 400);
- 561   3          }
- 562   2        }
- 563   1      }
- 564          
- 565          void sqr_wave() interrupt 1 {
- 566   1        speaker = ~speaker;
- 567   1        TH0 = -(freq)>>8;
- 568   1        TL0 = -(freq);
- 569   1      }
+ 446   1        if (letter == 'G') {
+ 447   2          bread1 = 0; bread2 = 0; bread3 = 0;
+ 448   2        }
+ 449   1      }
+ 450          
+ 451          void sqr_wave() interrupt 1 {
+ 452   1        speaker = ~speaker;
+ 453   1        TH0 = -(freq)>>8;
+ 454   1        TL0 = -(freq);
+ 455   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1362    ----
-   CONSTANT SIZE    =    673    ----
+   CODE SIZE        =    978    ----
+   CONSTANT SIZE    =    889    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =     13    ----
+   DATA SIZE        =     12       1
    IDATA SIZE       =   ----    ----
    BIT SIZE         =      1    ----
 END OF MODULE INFORMATION.
