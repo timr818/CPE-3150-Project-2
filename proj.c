@@ -65,43 +65,35 @@ unsigned char index;
 unsigned char index2;
 
 void delay(unsigned int time);
-void playsound(unsigned int dur, unsigned int del);
 void piano(void);
 void uart_init (void);
 void uart_isr(void);
 void uart_transmit(char c);
 void sqr_wave();
-void allstar();
-void rickroll();
-void sandstorm();
+void playsoung(unsigned char start, unsigned char end);
 void notebread(char letter);
 void breadoff();
 
-code int SmashMouth[] = {G5, D6, B5, B5, A5, G5, G5, C6, B5, B5, A5, A5, G5, 0, G5, D6, B5, B5, A5, A5, G5, G5, E5, D5, 0};
+code int notes[] = {
+					G5, D6, B5, B5, A5, G5, G5, C6, B5, B5, A5, A5, G5, 0, G5, D6, B5, B5, A5, A5, G5, G5, E5, D5, 0, //smash 0-24
+					G5, A5, C6, A5, E6, E6, D6, G5, A5, B5, G5, D6, D6, C6, B5, A5, G5, A5, B5, G5, C6, D6, B5, A5, G5, 0, G5, D6, C6, 0, //rickroll 25-54
+					A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, D6, D6, D6, D6, D6, D6, D6, C7, C7, C7, C7, C7, C7, C7, G5, G5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, D6, D6, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5
+					}; //55-108
+					
+code int dur[] = {
+				64, 32, 32, 64, 32, 32, 32, 64, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 64, 64, 32,
+				16, 16, 16, 16, 32, 32, 64, 16, 16, 16, 16, 32, 32, 32, 16, 32, 16, 16, 16, 16, 64, 32, 48, 16, 32, 32, 32, 64, 64, 32,
+				8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8,8, 8, 8, 24, 8,8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 24, 8, 8,8, 8, 8, 8, 24,8, 8, 8, 8, 8, 8, 24, 8, 8, 8,8, 8, 8, 24
+				};
+				
+code char letters[] = {'G', 'D', 'B', 'B', 'B', 'A', 'G', 'G', 'C', 'B', 'B', 'A', 'A', 'G', '#', 'G', 'D', 'B', 'B', 'A', 'A', 'G', 'G', 'E', 'D', '#' //smash
+						'G', 'A', 'C', 'A', 'E', 'E', 'D', 'G', 'A', 'B', 'G', 'D', 'D', 'C', 'B', 'A', 'G', 'A', 'B','G', 'C', 'D', 'B','A', 'G', '#', 'G', 'D', 'C', '#'
+						};
 	
-code char SmashNote[] = {'G', 'D', 'B', 'B', 'B', 'A', 'G', 'G', 'C', 'B', 'B', 'A', 'A', 'G', '#', 'G', 'D', 'B', 'B', 'A', 'A', 'G', 'G', 'E', 'D', '#'};
-
-code int durSmashMouth[] = {64, 32, 32, 64, 32, 32, 32, 64, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 64, 64, 32};
 	
 code char lyrSmashMouth[] = "Somebody once told me the world is gonna owe me, I ain't the sharpest tool in the shed.#";
 
-code int GiveYouUp[] = {G5, A5, C6, A5, E6, E6, D6, G5, A5, B5, G5, 
-											D6, D6, C6, B5, A5, G5, A5, B5, G5, C6, D6, B5,
-											A5, G5, 0, G5, D6, C6, 0};
-
-code char GiveYouNote[] = {'G', 'A', 'C', 'A', 'E', 'E', 'D', 'G', 'A', 'B', 'G', 
-											'D', 'D', 'C', 'B', 'A', 'G', 'A', 'B','G', 'C', 'D', 'B',
-											'A', 'G', '#', 'G', 'D', 'C', 0};
-
 code char lyrGiveYouUp[] = { "Never gonna give you up, never gonna let you down. Never gonna run around and, desert you.#" };
-
-code int durGiveYouUp[] = {16, 16, 16, 16, 32, 32, 64, 16, 16, 16, 16, 32, 32, 32, 16, 32, 16, 16, 16, 16, 64, 32, 48, 16, 32, 32, 32, 64, 64, 32};
-	
-code int Darude[] = { A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, D6, D6, D6, D6, D6, D6, D6, C7, C7, C7, C7, C7, C7, C7, G5, G5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, D6, D6, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5}; //54
-  
-code int durDarude[] = {8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8,8, 8, 8, 24, 8,8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 24, 8, 8,8, 8, 8, 8, 24,8, 8, 8, 8, 8, 8, 24, 8, 8, 8,8, 8, 8, 24};
-
-char trans;
 
 void main(void) {
 	mode = 1;
@@ -118,7 +110,6 @@ void main(void) {
 	P1M1=0x2F&P1M1;
 	P0M1=0;
 	
-	trans = 65;
 	uart_init(); //initialize serial stuff
 	
 	while(1) { //do FOREVER!!! MUWAHAHAHA
@@ -190,7 +181,14 @@ void main(void) {
 				uart_transmit('H');
 				uart_transmit(' ');
 				
-				allstar();
+				index2 = 0;
+				lyric = ' ';
+				while(lyric != '#') {
+					lyric = lyrSmashMouth[index2];
+					uart_transmit(lyric);
+				 	index2++;
+				}
+				playsoug(0, 24);
 				delay(buttonDelay);
 			} else if (mode == 2) {
 				uart_transmit('R');
@@ -204,7 +202,15 @@ void main(void) {
 				uart_transmit('L');
 				uart_transmit(' ');
 				
-				rickroll();
+				
+				index2 = 0;
+				lyric = ' ';
+				while(lyric != '#') {
+					lyric = lyrGiveYouUp[index2];
+					uart_transmit(lyric);
+				 	index2++;
+				}
+				playsoug(25, 54);
 				delay(buttonDelay);
 			} else if (mode == 3) {
 				light2=1;
@@ -221,7 +227,7 @@ void main(void) {
 				uart_transmit('U');
 				uart_transmit('D');
 				uart_transmit('E');
-				sandstorm();
+				playsong(55, 108);
 			}
 		}
 	}
@@ -351,17 +357,9 @@ void uart_transmit(char c) {
   SBUF = c;
 }
 
-void allstar() {
-
-	index2 = 0;
-	lyric = ' ';
-	while(lyric != '#') {
-		lyric = lyrSmashMouth[index2];
-		uart_transmit(lyric);
-	 	index2++;
-	}
+void playsoung(unsigned char start, unsigned char end) {
 	
-	for(index = 0; index < 25; index++) {
+	for(index = start; index < end; index++) {
 		//display which mode you are in
 		if (mode == 1) {
 			light3 = 0;
@@ -398,8 +396,8 @@ void allstar() {
 		
 		delay(200);
 		if (SmashMouth[index] != 0) {
-			freq = SmashMouth[index];
-			dur = durSmashMouth[index] * tempo;
+			freq = notes[index];
+			dur = dur[index] * tempo;
 			
 			notebread(SmashNote[index]);
 			
@@ -442,123 +440,6 @@ void notebread(char letter) {
 	}
 	if (letter == 'G') {
 		bread1 = 0; bread2 = 0; bread3 = 0;
-	}
-}
-
-void rickroll() {
-		
-	index2 = 0;
-	lyric = ' ';
-	while(lyric != '#') {
-		lyric = lyrGiveYouUp[index2];
-		uart_transmit(lyric);
-	 	index2++;
-	}
-	
-	for(index = 0; index < 30; index++) {		
-		
-		//display which mode you are in
-		if (mode == 1) {
-			light3 = 0;
-			light2 = 1;
-		} else if (mode == 2) {
-			light2 = 0;
-			light3 = 1;
-		} else if (mode == 3) {
-			light2 = 0;
-			light3 = 0;
-		}
-		
-		//increment button.
-		if (!button9) {
-			light9 = 0;
-			if (mode >= 3) {
-				mode = 0;
-			} else {
-				mode++;
-			}
-			light9 = 1;
-		}
-		
-		//decrement button
-		if (!button7) {
-			light7 = 0;
-			if (mode <= 1) {
-				mode = 3;
-			} else {
-				mode--;
-			}
-			light7 = 1;
-		}
-		
-		delay(200);
-		if (GiveYouUp[index] != 0) {
-			notebread(GiveYouNote[index]);
-			freq = GiveYouUp[index];
-			dur = durGiveYouUp[index] * tempo;
-			TR0 = 1;
-			delay(dur);
-			breadoff();
-		} else if (GiveYouUp[index] == 0) {
-			TR0 = 0;
-			dur = durGiveYouUp[index];
-			delay(dur * 400);
-		} else {
-			TR0 = 0;
-		}
-	}
-}
-
-void sandstorm() {
-	index2 = 0;
-	lyric = ' ';
-	
-	for(index = 0; index < 54; index++) {		
-		//display which mode you are in
-		if (mode == 1) {
-			light3 = 0;
-			light2 = 1;
-		} else if (mode == 2) {
-			light2 = 0;
-			light3 = 1;
-		} else if (mode == 3) {
-			light2 = 0;
-			light3 = 0;
-		}
-		
-		//increment button.
-		if (!button9) {
-			light9 = 0;
-			if (mode >= 3) {
-				mode = 0;
-			} else {
-				mode++;
-			}
-			light9 = 1;
-		}
-		
-		//decrement button
-		if (!button7) {
-			light7 = 0;
-			if (mode <= 1) {
-				mode = 3;
-			} else {
-				mode--;
-			}
-			light7 = 1;
-		}
-		
-		delay(200);
-		if (Darude[index] != 0) {
-			freq = Darude[index];
-			dur = durDarude[index] * tempo;
-			TR0 = 1;
-			delay(dur);
-			// Darudey notes
-			TR0 = 0;
-			dur = 8; // add breaks between notes
-			delay(dur * 400);
-		}
 	}
 }
 
