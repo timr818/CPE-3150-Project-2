@@ -2,27 +2,25 @@
 
 #define OSC_FREQ		7372800
 
-#define C4				((OSC_FREQ/4)/261.63)
-#define D4				((OSC_FREQ/4)/293.67)
-#define E4				((OSC_FREQ/4)/329.63)
-#define F4				((OSC_FREQ/4)/349.23)
-#define G4				((OSC_FREQ/4)/392.00)
-#define A4				((OSC_FREQ/4)/440.00) 
-#define B4				((OSC_FREQ/4)/493.88) 
-#define C5				((OSC_FREQ/4)/523.25) 
-#define D5				((OSC_FREQ/4)/587.33)
-#define E5				((OSC_FREQ/4)/659.26) 
-#define F5				((OSC_FREQ/4)/698.46) 
-#define G5				((OSC_FREQ/4)/783.99) 
-#define A5				((OSC_FREQ/4)/880.00) 
-#define B5				((OSC_FREQ/4)/987.77) 
-#define C6				((OSC_FREQ/4)/1046.5) 
-#define D6				((OSC_FREQ/4)/1174.7) 
-#define E6				((OSC_FREQ/4)/1318.5) 
-#define F6				((OSC_FREQ/4)/1396.9) 
-#define G6				((OSC_FREQ/4)/1568.0) 
-#define A6				((OSC_FREQ/4)/1760.0) 
-#define B6				((OSC_FREQ/4)/1975.5) 
+#define A4        ((OSC_FREQ/4)/440.00)
+#define B4        ((OSC_FREQ/4)/493.88) 
+#define C5        ((OSC_FREQ/4)/523.25) 
+#define D5        ((OSC_FREQ/4)/587.33) 
+#define Eb5       ((OSC_FREQ/4)/622.25) 
+#define E5        ((OSC_FREQ/4)/659.26) 
+#define F5        ((OSC_FREQ/4)/698.46) 
+#define Gb5       ((OSC_FREQ/4)/739.99) 
+#define G5        ((OSC_FREQ/4)/783.99) 
+#define A5        ((OSC_FREQ/4)/880.00) 
+#define B5        ((OSC_FREQ/4)/987.77) 
+#define C6        ((OSC_FREQ/4)/1046.5) 
+#define D6        ((OSC_FREQ/4)/1174.7) 
+#define Eb6       ((OSC_FREQ/4)/1244.5) 
+#define E6        ((OSC_FREQ/4)/1318.5) 
+#define F6        ((OSC_FREQ/4)/1396.9) 
+#define G6        ((OSC_FREQ/4)/1568.0) 
+#define A6        ((OSC_FREQ/4)/1760.0) 
+#define B6        ((OSC_FREQ/4)/1975.5) 
 #define C7				((OSC_FREQ/4)/2093.0) 
 
 sbit light1 = P2^4;
@@ -76,18 +74,21 @@ void breadoff();
 code int notes[] = {
 					G5, D6, B5, B5, A5, G5, G5, C6, B5, B5, A5, A5, G5, 0, G5, D6, B5, B5, A5, A5, G5, G5, E5, D5, 0, //smash 0-24
 					G5, A5, C6, A5, E6, E6, D6, G5, A5, B5, G5, D6, D6, C6, B5, A5, G5, A5, B5, G5, C6, D6, B5, A5, G5, 0, G5, D6, C6, 0, //rickroll 25-54
-					A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, D6, 0, D6, 0, D6, 0, D6, 0, D6, 0, D6, 0, D6, 0, C7, 0, C7, 0, C7, 0, C7, 0, C7, 0, C7, 0, C7, 0, G5, 0, G5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, D6, 0, D6, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0
-					}; //55-162
+					A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, D6, 0, D6, 0, D6, 0, D6, 0, D6, 0, D6, 0, D6, 0, C7, 0, C7, 0, C7, 0, C7, 0, C7, 0, C7, 0, C7, 0, G5, 0, G5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, D6, 0, D6, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0, A5, 0,
+				  // Darude 55-162
+					C5, G5, C6, Eb6, C6, B5, C6, D6, C6, G5, Eb5, C5, D5, Eb5, Gb5, G5, Eb5, C5, B4, A4, C5, D5, C5 // Bonestrousle 163-185
+					}; 
 					
 code int duration[] = {
 				64, 32, 32, 64, 32, 32, 32, 64, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 64, 64, 32,
 				16, 16, 16, 16, 32, 32, 64, 16, 16, 16, 16, 32, 32, 32, 16, 32, 16, 16, 16, 16, 64, 32, 48, 16, 32, 32, 32, 64, 64, 32,
-				8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 32
+				8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 24, 32,
+				32, 32, 32, 32, 64, 64, 32, 32, 64, 32, 32, 32, 32, 32, 32, 64, 32, 32, 32, 32, 32, 64, 64, 64
 				};
 						
 code char SmashNote[] = {'G', 'D', 'B', 'B', 'B', 'A', 'G', 'G', 'C', 'B', 'B', 'A', 'A', 'G', '#', 'G', 'D', 'B', 'B', 'A', 'A', 'G', 'G', 'E', 'D', '#'};
 
-code char RRNote[] = {'G', 'A', 'C', 'A', 'E', 'E', 'D', 'G', 'A', 'B', 'G', 'D', 'D', 'C', 'B', 'A', 'G', 'A', 'B','G', 'C', 'D', 'B','A', 'G', '#', 'G', 'D', 'C', '#'};
+//code char RRNote[] = {'G', 'A', 'C', 'A', 'E', 'E', 'D', 'G', 'A', 'B', 'G', 'D', 'D', 'C', 'B', 'A', 'G', 'A', 'B','G', 'C', 'D', 'B','A', 'G', '#', 'G', 'D', 'C', '#'};
 	
 	
 code char lyrSmashMouth[] = "Somebody once told me the world is gonna owe me, I ain't the sharpest tool in the shed.#";
@@ -136,12 +137,17 @@ void main(void) {
 			light1 = 0;
 			light2 = 1;
 			light3 = 1;
+		} else if (mode == 5) {
+			light1 = 0;
+			light2 = 1;
+			light3 = 0;
 		}
+		
 		
 		//increment button.
 		if (!button9) {
 			light9 = 0;
-			if (mode >= 4) {
+			if (mode >= 5) {
 				mode = 0;
 				delay(buttonDelay);
 			} else {
@@ -155,7 +161,7 @@ void main(void) {
 		if (!button7) {
 			light7 = 0;
 			if (mode <= 1) {
-				mode = 3;
+				mode = 5;
 				delay(buttonDelay);
 			} else {
 				mode--;
@@ -188,7 +194,6 @@ void main(void) {
 				 	index2++;
 				}
 				playsong(0, 24);
-				delay(buttonDelay);
 			} else if (mode == 2) {
 				uart_transmit('R');
 				uart_transmit('I');
@@ -210,7 +215,6 @@ void main(void) {
 				 	index2++;
 				}
 				playsong(25, 54);
-				delay(buttonDelay);
 			} else if (mode == 3) {
 				light2=1;
 				light3=1;
@@ -226,8 +230,27 @@ void main(void) {
 				uart_transmit('U');
 				uart_transmit('D');
 				uart_transmit('E');
+				uart_transmit(' ');
 				playsong(55, 162);
-				delay(buttonDelay);
+			} else if (mode == 5) {
+				light1 = 1;
+				light3 = 1;
+				light8 = 1;
+				uart_transmit('B');
+				uart_transmit('O');
+				uart_transmit('N');
+				uart_transmit('E');
+				uart_transmit('S');
+				uart_transmit('T');
+				uart_transmit('R');
+				uart_transmit('O');
+				uart_transmit('U');
+				uart_transmit('S');
+				uart_transmit('L');
+				uart_transmit('E');
+				uart_transmit(' ');
+				playsong(163, 185);
+				TR0 = 0;
 			}
 		}
 	}
@@ -246,7 +269,7 @@ void piano(void) {
 		}
 		//first key
 		if (!button4) {
-			freq = G4;
+			freq = A4;
 			dur = 5;
 			TR0 = 1;
 			light4=1;
@@ -254,7 +277,7 @@ void piano(void) {
 		
 		//second key
 		if (!button5) {
-			freq = G5;
+			freq = A5;
 			dur = 5;
 			TR0 = 1;
 			light5=1;
@@ -262,7 +285,7 @@ void piano(void) {
 		
 		//third key
 		if (!button6) {
-			freq = G6;
+			freq = A6;
 			dur = 5;
 			TR0 = 1;
 			light6=1;
@@ -362,37 +385,37 @@ void playsong(unsigned char start, unsigned char end) {
 	for(index = start; index <= end; index++) {
 		//display which mode you are in
 		if (mode == 1) {
+			light1 = 1;
 			light3 = 0;
 			light2 = 1;
 		} else if (mode == 2) {
+			light1 = 1;
 			light2 = 0;
 			light3 = 1;
 		} else if (mode == 3) {
+			light1 = 1;
 			light2 = 0;
+			light3 = 0;
+		} else if (mode == 4) {
+			light1 = 0;
+			light2 = 1;
+			light3 = 1;
+		} else if (mode == 5) {
+			light1 = 0;
+			light2 = 1;
 			light3 = 0;
 		}
 		
 		//increment button.
 		if (!button9) {
 			light9 = 0;
-			if (mode >= 3) {
+			if (mode >= 5) {
 				mode = 0;
 			} else {
 				mode++;
 			}
 			light9 = 1;
 		}
-		
-		//decrement button
-		if (!button7) {
-			light7 = 0;
-			if (mode <= 1) {
-				mode = 3;
-			} else {
-				mode--;
-			}
-			light7 = 1;
-		}	
 		
 		delay(200);
 		if (notes[index] != 0) {
@@ -402,7 +425,7 @@ void playsong(unsigned char start, unsigned char end) {
 			if (mode == 1) {
 				notebread(SmashNote[index]);
 			} else if (mode == 2) {
-				notebread(RRNote[index]);
+				//notebread(RRNote[index]);
 			}
 				
 			
