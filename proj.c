@@ -80,15 +80,15 @@ code int notes[] = {
 					A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, D6, D6, D6, D6, D6, D6, D6, C7, C7, C7, C7, C7, C7, C7, G5, G5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, D6, D6, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5, A5
 					}; //55-108
 					
-code int dur[] = {
+code int duratoin[] = {
 				64, 32, 32, 64, 32, 32, 32, 64, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 64, 64, 32,
 				16, 16, 16, 16, 32, 32, 64, 16, 16, 16, 16, 32, 32, 32, 16, 32, 16, 16, 16, 16, 64, 32, 48, 16, 32, 32, 32, 64, 64, 32,
 				8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 24, 8, 8, 8,8, 8, 8, 24, 8,8, 8, 8, 8, 8, 24, 8, 8, 8, 8, 8, 8, 24, 8, 8,8, 8, 8, 8, 24,8, 8, 8, 8, 8, 8, 24, 8, 8, 8,8, 8, 8, 24
 				};
-				
-code char letters[] = {'G', 'D', 'B', 'B', 'B', 'A', 'G', 'G', 'C', 'B', 'B', 'A', 'A', 'G', '#', 'G', 'D', 'B', 'B', 'A', 'A', 'G', 'G', 'E', 'D', '#' //smash
-						'G', 'A', 'C', 'A', 'E', 'E', 'D', 'G', 'A', 'B', 'G', 'D', 'D', 'C', 'B', 'A', 'G', 'A', 'B','G', 'C', 'D', 'B','A', 'G', '#', 'G', 'D', 'C', '#'
-						};
+						
+code char SmashNote[] = {'G', 'D', 'B', 'B', 'B', 'A', 'G', 'G', 'C', 'B', 'B', 'A', 'A', 'G', '#', 'G', 'D', 'B', 'B', 'A', 'A', 'G', 'G', 'E', 'D', '#'};
+
+code char RRNote[] = {'G', 'A', 'C', 'A', 'E', 'E', 'D', 'G', 'A', 'B', 'G', 'D', 'D', 'C', 'B', 'A', 'G', 'A', 'B','G', 'C', 'D', 'B','A', 'G', '#', 'G', 'D', 'C', '#'};
 	
 	
 code char lyrSmashMouth[] = "Somebody once told me the world is gonna owe me, I ain't the sharpest tool in the shed.#";
@@ -359,7 +359,7 @@ void uart_transmit(char c) {
 
 void playsoung(unsigned char start, unsigned char end) {
 	
-	for(index = start; index < end; index++) {
+	for(index = start; index <= end; index++) {
 		//display which mode you are in
 		if (mode == 1) {
 			light3 = 0;
@@ -395,18 +395,23 @@ void playsoung(unsigned char start, unsigned char end) {
 		}	
 		
 		delay(200);
-		if (SmashMouth[index] != 0) {
+		if (notes[index] != 0) {
 			freq = notes[index];
-			dur = dur[index] * tempo;
+			dur = duration[index] * tempo;
 			
-			notebread(SmashNote[index]);
+			if (mode == 1) {
+				notebread(SmashNote[index]);
+			} else if (mode == 2) {
+				notebread(RRNote[index]);
+			}
+				
 			
 			TR0 = 1;
 			delay(dur);
 			breadoff();
-		} else if (SmashMouth[index] == 0) {
+		} else if (notes[index] == 0) {
 			TR0 = 0;
-			dur = durSmashMouth[index];
+			dur = duration[index];
 			delay(dur * 400);
 		} else {
 			TR0 = 0;
